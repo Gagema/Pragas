@@ -1,0 +1,38 @@
+{
+  "name": "grupogrupo",
+  "version": "0.0.0",
+  "private": true,
+  "homepage": "https://github.com/murilosf94/grupogrupo#readme",
+  "bugs": {
+    "url": "https://github.com/murilosf94/grupogrupo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murilosf94/grupogrupo.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-session": "^1.18.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "method-override": "^3.0.0",
+    "morgan": "~1.9.1",
+    "multer": "^2.0.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.14.0",
+    "sequelize": "^6.37.7"
+  },
+  "keywords": [],
+  "description": ""
+}

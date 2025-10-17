@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  if session.usuario && session.usuario.funcao === 'admin'
+    .products-section
+      .container
+        .admin-header
+          h2.admin-title Lista de produtos em catálogo
+          
+        .sidebar-card
+          table.admin-table
+            thead.admin-thead
+              tr
+                th.admin-th Nome
+                th.admin-th Preço
+                th.admin-th Imagem
+                th.admin-th Estoque
+                th.admin-th Ações
+                
+            tbody.admin-tbody
+              each p in products
+                tr.admin-row
+                  td.admin-cell.admin-cell-name= p.name
+                  
+                  td.admin-cell
+                    span.product-price R$ #{p.price}
+                    
+                  td.admin-cell.admin-cell-image
+                    if p.imageUrl
+                      .image-container
+                        img.product-image(src=p.imageUrl, alt=p.name)
+                    else
+                      .image-placeholder
+                        span.placeholder-text (sem imagem)
+                        
+                  td.admin-cell.admin-cell-stock
+                    span.stock-value= p.stock
+                    
+                  td.admin-cell.admin-cell-actions
+                    .action-buttons
+                      a.btn.btn-view(href="/products/#{p.id}")
+                        span.btn-icon 👁
+                        span Ver
+                        
+                      a.btn.btn-edit(href="/products/#{p.id}/edit")
+                        span &#x270F
+                        span Editar
+                        
+                      form.delete-form(method="POST", action="/products/#{p.id}?_method=DELETE")
+                        input(type="hidden", name="_method", value="DELETE")
+                        button.btn.btn-delete(type="submit", onclick="return confirm('Tem certeza que deseja excluir este produto?')")
+                          span &#x1F5D1
+                          span Excluir

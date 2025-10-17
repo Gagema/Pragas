@@ -1,0 +1,30 @@
+extends layout 
+
+block content
+  .products-section
+    .products-layout
+      .products-grid
+        each c in carrinho
+          each p in products
+            if c.id_products === p.id
+              .product-card
+                .product-image-container
+                  a.product-link(href="/products/#{p.id}")
+                    if p.imageUrl
+                      img.product-image(src=p.imageUrl, alt=p.name)
+                    else
+                      .product-placeholder
+                        .placeholder-icon 📦
+                        | Sem imagem
+                
+                .product-content
+                  h3.product-title #{p.name}
+                  
+                  .product-price R$ #{p.price}
+                  
+                  .product-quantity
+                    strong Quantidade: #{c.quantidade}
+                  
+                  .product-actions
+                    a.btn-buy(href="/carrinho/comprar/#{session.usuario.id}/#{p.id}") Comprar
+    

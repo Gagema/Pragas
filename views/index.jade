@@ -1,0 +1,360 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title PestControl Pro | Sistema Inteligente de Controle de Pragas
+    style.
+      /* --- Reset Básico e Estilos Globais --- */
+      :root {
+          --primary-color: #2a7a3e; /* Verde escuro */
+          --secondary-color: #ff9800; /* Laranja para destaque */
+          --dark-color: #333333;
+          --light-color: #f4f4f4;
+          --background-color: #ffffff;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6;
+          color: var(--dark-color);
+          background-color: var(--background-color);
+      }
+
+      .container {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 0 20px;
+      }
+
+      h1, h2 {
+          font-weight: 600;
+          margin-bottom: 20px;
+      }
+
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2rem; }
+
+      section {
+          padding: 60px 0;
+      }
+
+      .btn {
+          display: inline-block;
+          padding: 12px 28px;
+          background-color: var(--secondary-color);
+          color: #fff;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+          transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+          background-color: #e68900;
+      }
+
+      /* --- Cabeçalho e Navegação --- */
+      .main-header {
+          background-color: #fff;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+      }
+
+      .main-nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 70px;
+      }
+
+      .main-nav .logo {
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: var(--primary-color);
+      }
+
+      .main-nav ul {
+          list-style: none;
+          display: flex;
+      }
+
+      .main-nav ul li {
+          margin-left: 20px;
+      }
+
+      .main-nav ul a {
+          text-decoration: none;
+          color: var(--dark-color);
+          font-weight: 500;
+          transition: color 0.3s ease;
+      }
+
+      .main-nav ul a:hover {
+          color: var(--primary-color);
+      }
+
+      /* --- Seção Herói (Principal) --- */
+      .hero {
+          background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1599599810694-b5b37304c297?q=80&w=2070&auto=format&fit=crop') center center/cover no-repeat;
+          color: #fff;
+          height: 80vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+      }
+
+      .hero-content {
+          max-width: 800px;
+      }
+
+      .hero-content p {
+          font-size: 1.2rem;
+          margin-bottom: 30px;
+      }
+
+      /* --- Seção "Como Funciona" --- */
+      .how-it-works {
+          text-align: center;
+          background-color: var(--light-color);
+      }
+
+      .steps-container {
+          display: flex;
+          justify-content: space-around;
+          margin-top: 40px;
+          flex-wrap: wrap;
+          gap: 20px;
+      }
+
+      .step {
+          flex-basis: 250px;
+          padding: 20px;
+      }
+
+      .step .icon {
+          font-size: 3rem;
+          color: var(--primary-color);
+          margin-bottom: 15px;
+      }
+
+      .step h3 {
+          margin-bottom: 10px;
+      }
+
+      /* --- Seção Vantagens --- */
+      .features {
+          text-align: center;
+      }
+      
+      .features-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 30px;
+          margin-top: 40px;
+          text-align: left;
+      }
+
+      .feature-card {
+          background-color: var(--light-color);
+          padding: 30px;
+          border-radius: 8px;
+          border-left: 5px solid var(--primary-color);
+      }
+
+      .feature-card h3 {
+          margin-bottom: 10px;
+          color: var(--primary-color);
+      }
+      
+      /* --- Seção Depoimentos --- */
+      .testimonials {
+          background-color: var(--primary-color);
+          color: #fff;
+          text-align: center;
+      }
+      
+      .testimonial {
+          max-width: 700px;
+          margin: 20px auto;
+      }
+
+      .testimonial blockquote {
+          font-size: 1.2rem;
+          font-style: italic;
+          margin-bottom: 15px;
+      }
+
+      .testimonial cite {
+          font-weight: bold;
+      }
+
+      /* --- Seção CTA e Contato --- */
+      .cta-contact {
+          background-color: var(--light-color);
+          text-align: center;
+      }
+      
+      .contact-form {
+          max-width: 600px;
+          margin: 40px auto 0;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+      }
+      
+      .contact-form input, .contact-form textarea {
+          width: 100%;
+          padding: 15px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 1rem;
+      }
+      
+      .contact-form textarea {
+          resize: vertical;
+          height: 150px;
+      }
+      
+      .contact-form .btn {
+          align-self: center;
+          cursor: pointer;
+          border: none;
+      }
+
+      /* --- Rodapé --- */
+      .main-footer {
+          background-color: var(--dark-color);
+          color: #fff;
+          text-align: center;
+          padding: 30px 0;
+      }
+      
+      /* --- Responsividade --- */
+      @media (max-width: 768px) {
+          h1 { font-size: 2.2rem; }
+          h2 { font-size: 1.8rem; }
+          
+          .main-nav {
+              flex-direction: column;
+              height: auto;
+              padding: 15px 0;
+          }
+          
+          .main-nav ul {
+              margin-top: 15px;
+              flex-direction: column;
+              align-items: center;
+          }
+          
+          .main-nav ul li {
+              margin: 10px 0;
+          }
+      }
+
+  body
+    // CABEÇALHO E NAVEGAÇÃO
+    header.main-header
+      nav.main-nav.container
+        a(href="#").logo PestControl Pro
+        ul
+        if session.usuario
+            if session.usuario.funcao === 'admin'
+             li
+               a(href="/products/new") Nova Praga
+               a(href="/categoria/new") Nova Categoria
+        li
+          a(href="#features") Vantagens
+        li
+          a(href="#contact") Contato
+        if !session.usuario
+          li
+            a(href="/login").btn Entrar
+        else
+            span.branco Olá, #{session.usuario.usuario}!
+            a.login-btn(href="/logout") Sair
+
+    main
+      // SEÇÃO HERÓI
+      section.hero
+        .hero-content
+          h1 Revolucione o Controle de Pragas com Tecnologia Inteligente
+          p Monitore, preveja e aja antes que as infestações se tornem um problema. Proteja seu negócio de forma eficiente e sustentável.
+          a(href="#contact").btn Solicitar uma Demonstração
+
+      // SEÇÃO COMO FUNCIONA
+      section#how-it-works.how-it-works
+        .container
+          h2 Como Nosso Sistema Funciona?
+          p Em três passos simples, você assume o controle total sobre as pragas.
+          .steps-container
+            .step
+              .icon 📡
+              h3 1. Instalação
+              p Instalamos sensores inteligentes em pontos estratégicos do seu estabelecimento, que operam 24/7 sem interrupções.
+            .step
+              .icon 📊
+              h3 2. Monitoramento
+              p Os sensores coletam dados em tempo real e os enviam para nossa plataforma na nuvem, onde algoritmos analisam a atividade.
+            .step
+              .icon 🔔
+              h3 3. Ação
+              p Você recebe alertas instantâneos no seu celular ou e-mail ao detectar atividade suspeita, permitindo ação imediata e precisa.
+
+      // SEÇÃO VANTAGENS
+      section#features.features
+        .container
+          h2 Vantagens do PestControl Pro
+          .features-grid
+            .feature-card
+              h3 Monitoramento 24/7
+              p Vigilância contínua que elimina a necessidade de inspeções manuais demoradas e ineficientes.
+            .feature-card
+              h3 Redução de Custos
+              p Economize ao evitar danos e perdas de estoque, além de otimizar o uso de defensivos e mão de obra.
+            .feature-card
+              h3 Sustentabilidade
+              p Aja de forma direcionada, reduzindo drasticamente o uso de pesticidas e o impacto ambiental.
+            .feature-card
+              h3 Análise Preditiva
+              p Nossa IA identifica padrões e prevê possíveis infestações, colocando você sempre um passo à frente.
+            .feature-card
+              h3 Relatórios Detalhados
+              p Gere relatórios completos para auditorias, conformidade regulatória e otimização de processos.
+            .feature-card
+              h3 Alertas Inteligentes
+              p Seja notificado no momento exato em que uma ação é necessária, onde quer que você esteja.
+
+      // SEÇÃO DEPOIMENTOS
+      section#testimonials.testimonials
+        .container
+          h2 O que nossos clientes dizem
+          .testimonial
+            blockquote "Desde que implementamos o PestControl Pro, reduzimos nossas perdas em 30% e passamos em todas as auditorias sanitárias com louvor. É uma tranquilidade que não tem preço."
+            cite - João Silva, Gerente de Operações, Indústria Alimentícia ABC
+      
+      // SEÇÃO CONTATO E CTA
+      section#contact.cta-contact
+        .container
+          h2 Pronto para Levar seu Controle de Pragas para o Futuro?
+          p Preencha o formulário abaixo e nossa equipe entrará em contato para agendar uma demonstração gratuita e personalizada.
+          form.contact-form(action="#", method="POST")
+            input(type="text", name="name", placeholder="Seu nome", required)
+            input(type="email", name="email", placeholder="Seu e-mail profissional", required)
+            textarea(name="message", placeholder="Fale um pouco sobre sua necessidade...")
+            button(type="submit").btn Enviar e Agendar Demo
+
+    // RODAPÉ
+    footer.main-footer
+      .container
+        p &copy; 2025 PestControl Pro. Todos os direitos reservados.
+        p Rua da Tecnologia, 123 - São Paulo, SP | contato@pestcontrolpro.com
