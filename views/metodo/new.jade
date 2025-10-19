@@ -172,46 +172,25 @@ html(lang="pt-BR")
     main
       .container
         .page-header
-          h2 Adicionar Nova Praga
-          p Preencha os detalhes abaixo para adicionar uma nova praga ao banco de dados do sistema.
+          h2 Adicionar Nova Método
+          p Preencha os detalhes abaixo para adicionar uma nova categoria ao banco de dados do sistema.
 
         // FORMULÁRIO DE CADASTRO DE PRAGA
-        form.pest-form(action="/products", method="POST", enctype="multipart/form-data")
+        form.pest-form(action="/metodo", method="POST", enctype="multipart/form-data")
           
           .form-group
             label(for="name") Nome Comum
             input(type="text", id="name", name="name", placeholder="Ex: Barata-americana", required)
           
-          .form-group
-            label(for="name2") Nome Científico
-            input(type="text", id="name2", name="name2", placeholder="Ex: Periplaneta americana", required)
           
           .form-group
             label(for="description") Descrição
             textarea(id="description", name="description", placeholder="Descreva as características físicas, habitat e comportamento da praga.", required)
           
-          .form-group
-            label(for="life-cycle") Ciclo de Vida
-            textarea(id="life-cycle", name="life_cycle", placeholder="Detalhe as fases do ciclo de vida (ovo, ninfa, adulto, etc.) e sua duração.", required)
+     
           
-          .form-group
-            label(for="damage") Danos e Riscos
-            textarea(id="damage", name="damage", placeholder="Liste os danos que a praga pode causar a estruturas, alimentos, e os riscos à saúde.", required)
-          
-          .form-group
-            <label>Método</a>
-            
-            <select name="Metodo">
-            each m in metodos
-              <option value="#{m.name}">#{m.name}</option>
-            </select>
-          .form-group
-            <label>Categoria</a>
-            
-            <select name="Categoria">
-            each c in categorias
-              <option value="#{c.name}">#{c.name}</option>
-            </select>
+
+
           .form-group
               label.form-label Imagem do Produto
               .file-upload-area
@@ -222,4 +201,4 @@ html(lang="pt-BR")
                 input.file-input(type="file", name="image", accept="image/*")
           
           .form-actions
-            button(type="submit").btn Salvar Praga
+            button(type="submit").btn Salvar Método

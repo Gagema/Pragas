@@ -79,7 +79,7 @@ html(lang="pt-BR")
           p Modifique as informações da praga e salve as alterações.
 
         .edit-form-container
-          form(method='POST', action=`/categoria/${product.id}?_method=PUT`, enctype="multipart/form-data")
+          form(method='POST', action=`/metodo/${product.id}?_method=PUT`, enctype="multipart/form-data")
             input(type="hidden", name="currentImageUrl", value=product.imageUrl)
             
             .form-group
@@ -109,7 +109,7 @@ html(lang="pt-BR")
                       .file-hint Formatos aceitos: JPG, PNG, GIF (máx. 5MB)
             
             .form-actions
-              a(href="/products/#{product.id}").btn.btn-secondary Cancelar
+              a(href="/metodo/#{product.id}").btn.btn-secondary Cancelar
               button(type="submit").btn.btn-primary Salvar Alterações
 
     footer.main-footer

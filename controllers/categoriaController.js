@@ -76,14 +76,14 @@ exports.edit = async (req, res, next) => {
 // controllers/productController.js
 exports.update = async (req, res, next) => {
   try {
-    const { name,name2, description, life_cycle, damage, currentImageUrl } = req.body;
+    const { name, description, currentImageUrl } = req.body;
     // se veio arquivo, use a nova imagem; senão, mantenha a antiga
     const imageUrl = req.file
       ? '/images/' + req.file.filename
       : currentImageUrl;
 
     await pool.execute(
-      `UPDATE Praga
+      `UPDATE Categoria
          SET name        = ?,
           
              description = ?,

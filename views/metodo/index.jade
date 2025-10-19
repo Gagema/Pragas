@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  h2 Lista de Produtos
+  table
+    thead
+      tr
+        th Nome
+        th Preço
+        th Imagem
+        th Estoque
+        th Ações
+    tbody
+      each p in products
+        tr
+          td= p.name
+          td R$ #{p.price}
+          td
+            if p.imageUrl
+              img(src=p.imageUrl, width="80") 
+            else
+              | (sem imagem)
+          td= p.name
+          td= p.stock

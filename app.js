@@ -15,6 +15,9 @@ var indexRouter      = require('./routes/index');
 var usersRouter      = require('./routes/users');
 var produtosRouter   = require('./routes/nossosprodutos');
 var categoriaRouter   = require('./routes/categorias');
+var metodoRouter   = require('./routes/metodos');
+var categoriasRouter   = require('./routes/nossascategorias');
+var metodosRouter   = require('./routes/nossosmetodos');
 var acessoriosRouter = require('./routes/categorias/acessorios');
 var roupasRouter     = require('./routes/categorias/roupas');
 var eletronicosRouter= require('./routes/categorias/eletronicos');
@@ -79,6 +82,8 @@ app.use(authRoutes);
 // Rotas públicas
 app.use('/', indexRouter);
 app.use('/nossosprodutos', produtosRouter);
+app.use('/nossascategorias', categoriasRouter);
+app.use('/nossosmetodos', metodosRouter);
 app.use('/categorias/acessorios', acessoriosRouter);
 app.use('/categorias/roupas', roupasRouter);
 app.use('/categorias/eletronicos', eletronicosRouter);
@@ -90,6 +95,7 @@ app.use('/products', estaLogado, productsRouter);
 // Rotas protegidas
 app.use('/users', estaLogado, usersRouter);
 app.use('/carrinho', estaLogado, carrinhoRouter);
+app.use('/metodo',estaLogado, metodoRouter);
 app.use('/pedidos', estaLogado, pedidosRouter);
 app.use('/anunciar', estaLogado, anunciarRouter);
 app.use('/perfil', estaLogado, meuperfilRouter);

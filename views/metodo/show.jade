@@ -1,0 +1,98 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    //- O título será preenchido dinamicamente pelo backend
+    title #{product.name} | Catálogo de Pragas - PestControl Pro
+    style.
+      :root {
+          --primary-color: #2a7a3e; --secondary-color: #ff9800; --dark-color: #333333;
+          --light-color: #f4f4f4; --background-color: #ffffff; --border-color: #ddd;
+          --danger-color: #dc3545; --info-color: #007bff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6; color: var(--dark-color); background-color: var(--light-color);
+      }
+      .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+      .btn {
+          display: inline-block; padding: 10px 24px; color: #fff; text-decoration: none; 
+          border-radius: 5px; font-weight: bold; transition: background-color 0.3s ease; 
+          cursor: pointer; border: none; font-size: 1rem;
+      }
+      .main-header { background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      .main-nav { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+      .main-nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+      .main-nav ul { list-style: none; display: flex; align-items: center; }
+      .main-nav ul li { margin-left: 20px; }
+      .main-nav ul a { text-decoration: none; color: var(--dark-color); font-weight: 500; }
+      .main-nav ul a.logout-btn { color: var(--secondary-color); font-weight: bold; }
+      main { padding: 60px 0; }
+      .pest-detail-layout {
+          display: grid; grid-template-columns: 1fr 1.5fr;
+          gap: 40px; align-items: flex-start;
+      }
+      .pest-image-wrapper img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+      .pest-info .pest-title { font-size: 2.5rem; margin-bottom: 5px; color: var(--dark-color); }
+      .pest-info .pest-scientific-name { font-size: 1.2rem; font-style: italic; color: #666; margin-bottom: 30px; display: block; }
+      .detail-section { margin-bottom: 30px; }
+      .detail-section h3 {
+          font-size: 1.3rem; color: var(--primary-color); margin-bottom: 10px;
+          padding-bottom: 5px; border-bottom: 2px solid var(--border-color);
+      }
+      .admin-actions {
+          margin-top: 30px; padding: 20px; background-color: #f9f9f9;
+          border-radius: 8px; border: 1px solid var(--border-color); display: flex; gap: 15px; align-items: center;
+      }
+      .btn-edit { background-color: var(--info-color); }
+      .btn-edit:hover { background-color: #0056b3; }
+      .btn-delete { background-color: var(--danger-color); }
+      .btn-delete:hover { background-color: #c82333; }
+      .main-footer { background-color: var(--dark-color); color: #fff; text-align: center; padding: 30px 0; margin-top: 60px; }
+      @media (max-width: 800px) { .pest-detail-layout { grid-template-columns: 1fr; } }
+
+  body
+    header.main-header
+      nav.main-nav.container
+        a(href="/").logo PestControl Pro
+        ul
+          li
+            a(href="/#features") Vantagens
+          li
+            a(href="/#contact") Contato
+
+    main
+      .container
+        .pest-detail-layout
+          // Coluna da Imagem
+          .pest-image-wrapper
+            img(src=product.imageUrl, alt=product.name)
+
+          // Coluna de Informações
+          .pest-info
+            h1.pest-title= product.name
+            span.pest-scientific-name= product.name2
+
+            .detail-section
+              h3 Descrição
+              p= product.description
+            
+            
+            
+            
+            
+            //- Bloco de Ações do Admin
+            if session && session.usuario && session.usuario.funcao === 'admin'
+              .admin-actions
+                a(href="/metodo/#{product.id}/edit").btn.btn-edit Editar Método
+                
+                
+                form(method="POST", action="/metodo/#{product.id}?_method=DELETE", style="display:inline; margin:0;")
+                  button(type="submit", onclick="return confirm('Tem certeza que deseja excluir esta praga?')").btn.btn-delete Excluir Método
+                  
+
+    footer.main-footer
+      .container
+        p &copy; 2025 PestControl Pro. Todos os direitos reservados.
