@@ -30,8 +30,8 @@ CREATE TABLE Praga (
   damage TEXT,
  
   imageUrl VARCHAR(255),
-  Metodo VARCHAR (255),
-  Categoria VARCHAR (255),
+  Metodo_id INT,
+  Categoria_id INT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

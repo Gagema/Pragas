@@ -201,16 +201,16 @@ html(lang="pt-BR")
           .form-group
             <label>Método</a>
             
-            <select name="Metodo">
+            <select name="Metodo" id="Metodo">
             each m in metodos
-              <option value="#{m.name}">#{m.name}</option>
+              <option value="#{m.id}">#{m.name}</option>
             </select>
           .form-group
             <label>Categoria</a>
             
-            <select name="Categoria">
+            <select name="Categoria" id="Categoria">
             each c in categorias
-              <option value="#{c.name}">#{c.name}</option>
+              <option value="#{c.id}">#{c.name}</option>
             </select>
           .form-group
               label.form-label Imagem do Produto

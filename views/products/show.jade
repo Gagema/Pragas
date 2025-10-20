@@ -42,6 +42,23 @@ html(lang="pt-BR")
           font-size: 1.3rem; color: var(--primary-color); margin-bottom: 10px;
           padding-bottom: 5px; border-bottom: 2px solid var(--border-color);
       }
+      
+      /* --- NOVO ESTILO ADICIONADO --- */
+      .detail-link {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: #fff;
+        padding: 5px 12px;
+        border-radius: 15px; /* Deixa com formato de "pílula" */
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+      }
+      .detail-link:hover {
+        background-color: #1e5a2d; /* Verde mais escuro no hover */
+        color: #fff;
+      }
+
       .admin-actions {
           margin-top: 30px; padding: 20px; background-color: #f9f9f9;
           border-radius: 8px; border: 1px solid var(--border-color); display: flex; gap: 15px; align-items: center;
@@ -87,15 +104,27 @@ html(lang="pt-BR")
               h3 Danos e Riscos
               p= product.damage
             
-            //- Bloco de Ações do Admin
+            //- CORREÇÃO DE ESTILO E INDENTAÇÃO
+            .detail-section
+              h3 Método
+              //- Adicionada a classe .detail-link e corrigido o href
+              a(href="/metodo/" + metodos.id + "/").detail-link #{metodos.name}
+
+            //- CORREÇÃO DE ESTILO E INDENTAÇÃO
+            .detail-section
+              h3 Categoria
+              //- Adicionada a classe .detail-link e corrigido o href
+              a(href="/categoria/" + categorias.id + "/").detail-link #{categorias.name}
+            
+            //- Bloco de Ações do Admin (SINTAXE CORRIGIDA)
             if session && session.usuario && session.usuario.funcao === 'admin'
               .admin-actions
-                a(href="/products/#{product.id}/edit").btn.btn-edit Editar Praga
+                //- Corrigido o href para usar +
+                a(href="/products/" + product.id + "/edit").btn.btn-edit Editar Praga
                 
-                
-                form(method="POST", action="/products/#{product.id}?_method=DELETE", style="display:inline; margin:0;")
+                //- Corrigido o action para usar +
+                form(method="POST", action="/products/" + product.id + "?_method=DELETE", style="display:inline; margin:0;")
                   button(type="submit", onclick="return confirm('Tem certeza que deseja excluir esta praga?')").btn.btn-delete Excluir Praga
-                  
 
     footer.main-footer
       .container
