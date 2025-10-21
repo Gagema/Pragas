@@ -1,0 +1,76 @@
+CREATE DATABASE ecommerce;
+USE ecommerce;
+
+CREATE TABLE usuarios(
+    id integer PRIMARY KEY AUTO_INCREMENT,
+    usuario VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    funcao VARCHAR(255) NOT NULL,
+    criado TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  price DECIMAL(10,2) NOT NULL,
+  stock INT DEFAULT 0,
+  imageUrl VARCHAR(255),
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Praga (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  name2 VARCHAR(255) NOT NULL,
+  description TEXT,
+  life_cycle TEXT,
+  damage TEXT,
+ 
+  imageUrl VARCHAR(255),
+  Metodo_id INT,
+  Categoria_id INT,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+CREATE TABLE Categoria (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  
+  description TEXT,
+ 
+  imageUrl VARCHAR(255),
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Metodo (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+
+  description TEXT,
+
+  imageUrl VARCHAR(255),
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE carrinho(
+    id integer PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT,
+    id_products INT,
+    FOREIGN KEY (id_usuario) references usuarios(id),
+    FOREIGN KEY (id_products) references products(id),
+    
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+ALTER TABLE Metodo
+ADD COLUMN principios_ativos varchar(1000),
+ADD COLUMN manejo_integrado TEXT,
+ADD COLUMN dosagem_recomendada VARCHAR(255),
+ADD COLUMN carencia_dias INT;

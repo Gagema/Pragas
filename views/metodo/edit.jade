@@ -1,0 +1,137 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    //- O título agora usa a variável 'metodo' para ser dinâmico
+    title Editar Método: #{metodo.name} | Painel Admin - PestControl Pro
+    style.
+      /* --- Reset Básico e Estilos Globais (Consistentes com o site) --- */
+      :root {
+          --primary-color: #2a7a3e; --secondary-color: #ff9800; --dark-color: #333333;
+          --light-color: #f4f4f4; --background-color: #ffffff; --border-color: #ddd;
+          --danger-color: #dc3545; --info-color: #007bff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6; color: var(--dark-color); background-color: var(--light-color);
+      }
+      .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+      h2 { font-size: 2rem; }
+      h3 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+      .btn {
+          display: inline-block; padding: 10px 24px; color: #fff; text-decoration: none; 
+          border-radius: 5px; font-weight: bold; transition: background-color 0.3s ease; 
+          cursor: pointer; border: none;
+      }
+      .btn-primary { background-color: var(--primary-color); }
+      .btn-primary:hover { background-color: #1e5a2d; }
+      .btn-secondary { background-color: #6c757d; }
+      .btn-secondary:hover { background-color: #5a6268; }
+      .admin-header { background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      .admin-nav { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+      .admin-nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+      .admin-nav ul { list-style: none; display: flex; }
+      .admin-nav ul li { margin-left: 20px; }
+      .admin-nav ul a { text-decoration: none; color: var(--dark-color); font-weight: 500; }
+      .admin-nav ul a.active { color: var(--primary-color); font-weight: bold; }
+      .admin-nav ul a.logout-btn { color: var(--secondary-color); font-weight: bold; }
+      main { padding: 40px 0; }
+      .page-header { text-align: center; margin-bottom: 40px; }
+      .edit-form-container {
+          background-color: var(--background-color); padding: 30px; border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      }
+      .form-group { margin-bottom: 25px; }
+      .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+      .form-group input[type="text"], 
+      .form-group input[type="number"], 
+      .form-group textarea {
+          width: 100%; padding: 12px 15px; border: 1px solid var(--border-color);
+          border-radius: 5px; font-size: 1rem; transition: border-color 0.3s ease;
+      }
+      .form-group textarea { resize: vertical; min-height: 120px; }
+      .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); }
+      .image-preview-group { margin-top: 30px; }
+      .image-preview-group label { margin-bottom: 15px; display: block; font-weight: 600; }
+      .current-image-preview {
+          max-width: 200px; height: auto; object-fit: cover; border: 1px solid var(--border-color);
+          border-radius: 5px; margin-bottom: 15px; display: block;
+      }
+      .form-group input[type="file"] {
+          padding: 10px; background-color: #f9f9f9; border: 1px solid var(--border-color);
+          border-radius: 5px; width: 100%;
+      }
+      .form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
+      .main-footer { background-color: var(--dark-color); color: #fff; text-align: center; padding: 30px 0; }
+
+  body
+    header.admin-header
+      nav.admin-nav.container
+        a(href="#").logo PestControl Pro - Admin
+        ul
+          li: a(href="#") Dashboard
+          li: a(href="/nossosmetodos").active Métodos
+          li: a(href="#") Usuários
+          li: a(href="#").logout-btn Sair
+
+    main
+      .container
+        .page-header
+          h2 Editar Método: #{metodo.name}
+          p Modifique as informações do método e salve as alterações.
+
+        .edit-form-container
+          //- Corrigi a variável 'product' para 'metodo' para manter a consistência
+          form(method='POST', action=`/metodo/${metodo.id}?_method=PUT`, enctype="multipart/form-data")
+            input(type="hidden", name="currentImageUrl", value=metodo.imageUrl)
+            
+            h3 Informações Gerais
+            
+            .form-group
+              label(for="name") Nome do Método
+              input(type="text", id="name", name="name", value=metodo.name, required)
+            
+            .form-group
+              label(for="description") Descrição Geral
+              textarea(id="description", name="description", required) #{metodo.description}
+            
+            .image-preview-group
+              label Imagem Atual do Método
+              if metodo.imageUrl
+                img(src=metodo.imageUrl, alt=metodo.name).current-image-preview
+              else
+                p Nenhuma imagem cadastrada.
+              .form-group
+                label(for="image") Enviar Nova Imagem (opcional)
+                input.file-input(type="file", name="image", id="image", accept="image/*")
+            
+
+            //HISTÓRIA 13            
+            h3 Informações Técnicas (Para Agrônomos)
+            
+            .form-group
+              label(for='principios_ativos') Princípios Ativos
+              input#principios_ativos.form-control(type='text', name='principios_ativos', value=metodo.principios_ativos, placeholder="Ex: Azadiractina, Deltametrina")
+              
+            .form-group
+              label(for='manejo_integrado') Recomendações de Manejo Integrado
+              textarea#manejo_integrado.form-control(name='manejo_integrado', rows='5', placeholder="Descreva práticas culturais, monitoramento e outras ações associadas.") #{metodo.manejo_integrado}
+
+            .form-group
+              label(for='dosagem_recomendada') Dosagem Recomendada
+              input#dosagem_recomendada.form-control(type='text', name='dosagem_recomendada', value=metodo.dosagem_recomendada, placeholder="Ex: 5ml para cada 1L de água")
+              
+            .form-group
+              label(for='carencia_dias') Período de Carência (dias)
+              input#carencia_dias.form-control(type='number', name='carencia_dias', value=metodo.carencia_dias, placeholder="Ex: 15")
+            
+            .form-actions
+              //- Corrigido o link de cancelar
+              a(href="/nossosmetodos").btn.btn-secondary Cancelar
+              button(type="submit").btn.btn-primary Salvar Alterações
+
+    footer.main-footer
+      .container
+        p &copy; 2025 PestControl Pro. Todos os direitos reservados.

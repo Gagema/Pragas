@@ -1,0 +1,218 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Cadastrar Método | Painel Admin - PestControl Pro
+    style.
+      /* --- Reset Básico e Estilos Globais (Consistentes com o site) --- */
+      :root {
+          --primary-color: #2a7a3e; /* Verde escuro */
+          --secondary-color: #ff9800; /* Laranja para destaque */
+          --dark-color: #333333;
+          --light-color: #f4f4f4;
+          --background-color: #ffffff;
+          --border-color: #ddd;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6;
+          color: var(--dark-color);
+          background-color: var(--light-color);
+      }
+
+      .container {
+          max-width: 900px; /* Um pouco mais largo para o formulário */
+          margin: 0 auto;
+          padding: 0 20px;
+      }
+      
+      h2 { font-size: 2rem; }
+      h3 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+
+
+      .btn {
+          display: inline-block;
+          padding: 12px 28px;
+          background-color: var(--primary-color);
+          color: #fff;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+          transition: background-color 0.3s ease;
+          cursor: pointer;
+          border: none;
+      }
+
+      .btn:hover {
+          background-color: #1e5a2d;
+      }
+
+      /* --- Cabeçalho do Painel Admin --- */
+      .admin-header {
+          background-color: #fff;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+
+      .admin-nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 70px;
+      }
+
+      .admin-nav .logo {
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: var(--primary-color);
+          text-decoration: none;
+      }
+
+      .admin-nav ul {
+          list-style: none;
+          display: flex;
+      }
+
+      .admin-nav ul li {
+          margin-left: 20px;
+      }
+
+      .admin-nav ul a {
+          text-decoration: none;
+          color: var(--dark-color);
+          font-weight: 500;
+      }
+      
+      .admin-nav ul a.logout-btn {
+          color: var(--secondary-color);
+          font-weight: bold;
+      }
+
+      /* --- Conteúdo Principal --- */
+      main {
+          padding: 40px 0;
+      }
+      
+      .page-header {
+          text-align: center;
+          margin-bottom: 40px;
+      }
+      
+      /* --- Formulário de Cadastro --- */
+      .pest-form {
+          background-color: var(--background-color);
+          padding: 30px;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      }
+      
+      .form-group {
+          margin-bottom: 25px;
+      }
+      
+      .form-group label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: 600;
+          color: #555;
+      }
+      
+      .form-group input[type="text"],
+      .form-group input[type="number"],
+      .form-group textarea {
+          width: 100%;
+          padding: 12px 15px;
+          border: 1px solid var(--border-color);
+          border-radius: 5px;
+          font-size: 1rem;
+          transition: border-color 0.3s ease;
+      }
+      
+      .form-group textarea {
+          resize: vertical;
+          min-height: 120px;
+      }
+      
+      .form-group input:focus,
+      .form-group textarea:focus {
+          outline: none;
+          border-color: var(--primary-color);
+      }
+      
+      /* Estilo para o Input de Upload */
+      .form-group input[type="file"] {
+          padding: 10px;
+          background-color: #f9f9f9;
+      }
+      
+      .form-actions {
+          text-align: right;
+          margin-top: 30px;
+      }
+
+  body
+    // CABEÇALHO DO PAINEL ADMINISTRATIVO
+    header.admin-header
+      nav.admin-nav.container
+        a(href="#").logo PestControl Pro - Admin
+        ul
+          li
+            a(href="#") Dashboard
+          li
+            a(href="#") Métodos
+          li
+            a(href="#") Usuários
+          li
+            a(href="#").logout-btn Sair
+
+    main
+      .container
+        .page-header
+          h2 Adicionar Novo Método
+          p Preencha os detalhes abaixo para adicionar um novo método ao banco de dados.
+
+        // FORMULÁRIO DE CADASTRO
+        form.pest-form(action="/metodo", method="POST", enctype="multipart/form-data")
+          
+          h3 Informações Gerais
+
+          .form-group
+            label(for="name") Nome do Método
+            input(type="text", id="name", name="name", placeholder="Ex: Controle Biológico com Joaninhas", required)
+          
+          .form-group
+            label(for="description") Descrição Geral
+            textarea(id="description", name="description", placeholder="Descreva como o método funciona, para quais pragas é eficaz, etc.", required)
+          
+          .form-group
+            label(for="image") Imagem do Método (opcional)
+            input.file-input(type="file", name="image", id="image", accept="image/*")
+
+          //HISTÓRIA 13         
+          h3 Informações Técnicas (Para Agrônomos)
+      
+          .form-group
+            label(for='principios_ativos') Princípios Ativos
+            input#principios_ativos.form-control(type='text', name='principios_ativos', placeholder="Ex: Azadiractina, Deltametrina")
+            
+          .form-group
+            label(for='manejo_integrado') Recomendações de Manejo Integrado
+            textarea#manejo_integrado.form-control(name='manejo_integrado', rows='5', placeholder="Descreva práticas culturais, monitoramento e outras ações associadas.")
+
+          .form-group
+            label(for='dosagem_recomendada') Dosagem Recomendada
+            input#dosagem_recomendada.form-control(type='text', name='dosagem_recomendada', placeholder="Ex: 5ml para cada 1L de água")
+            
+          .form-group
+            label(for='carencia_dias') Período de Carência (dias)
+            input#carencia_dias.form-control(type='number', name='carencia_dias', placeholder="Ex: 15")
+
+          .form-actions
+            button(type="submit").btn Salvar Método

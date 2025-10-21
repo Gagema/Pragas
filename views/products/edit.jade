@@ -1,0 +1,139 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Editar Praga: Barata-americana | Painel Admin - PestControl Pro
+    style.
+      /* --- Reset Básico e Estilos Globais (Consistentes com o site) --- */
+      :root {
+          --primary-color: #2a7a3e; --secondary-color: #ff9800; --dark-color: #333333;
+          --light-color: #f4f4f4; --background-color: #ffffff; --border-color: #ddd;
+          --danger-color: #dc3545; --info-color: #007bff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6; color: var(--dark-color); background-color: var(--light-color);
+      }
+      .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+      h2 { font-size: 2rem; margin-bottom: 20px; }
+      .btn {
+          display: inline-block; padding: 10px 24px; color: #fff; text-decoration: none; 
+          border-radius: 5px; font-weight: bold; transition: background-color 0.3s ease; 
+          cursor: pointer; border: none;
+      }
+      .btn-primary { background-color: var(--primary-color); }
+      .btn-primary:hover { background-color: #1e5a2d; }
+      .btn-secondary { background-color: #6c757d; }
+      .btn-secondary:hover { background-color: #5a6268; }
+      .admin-header { background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      .admin-nav { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+      .admin-nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+      .admin-nav ul { list-style: none; display: flex; }
+      .admin-nav ul li { margin-left: 20px; }
+      .admin-nav ul a { text-decoration: none; color: var(--dark-color); font-weight: 500; }
+      .admin-nav ul a.active { color: var(--primary-color); font-weight: bold; }
+      .admin-nav ul a.logout-btn { color: var(--secondary-color); font-weight: bold; }
+      main { padding: 40px 0; }
+      .page-header { text-align: center; margin-bottom: 40px; }
+      .edit-form-container {
+          background-color: var(--background-color); padding: 30px; border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      }
+      .form-group { margin-bottom: 25px; }
+      .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+      .form-group input[type="text"], .form-group textarea {
+          width: 100%; padding: 12px 15px; border: 1px solid var(--border-color);
+          border-radius: 5px; font-size: 1rem; transition: border-color 0.3s ease;
+      }
+      .form-group textarea { resize: vertical; min-height: 120px; }
+      .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); }
+      .image-preview-group { margin-bottom: 25px; }
+      .image-preview-group label { margin-bottom: 15px; }
+      .current-image-preview {
+          width: 150px; height: 112.5px; object-fit: cover; border: 1px solid var(--border-color);
+          border-radius: 5px; margin-bottom: 15px; display: block;
+      }
+      .form-group input[type="file"] {
+          padding: 10px; background-color: #f9f9f9; border: 1px solid var(--border-color);
+          border-radius: 5px; width: auto; display: block;
+      }
+      .form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
+      .main-footer { background-color: var(--dark-color); color: #fff; text-align: center; padding: 30px 0; }
+
+  body
+    header.admin-header
+      nav.admin-nav.container
+        a(href="#").logo PestControl Pro - Admin
+        ul
+          li: a(href="#") Dashboard
+          li: a(href="/admin_listar_pragas.html").active Pragas
+          li: a(href="#") Usuários
+          li: a(href="#").logout-btn Sair
+
+    main
+      .container
+        .page-header
+          h2 Editar Praga: Barata-americana
+          p Modifique as informações da praga e salve as alterações.
+
+        .edit-form-container
+          form(method='POST', action=`/products/${product.id}?_method=PUT`, enctype="multipart/form-data")
+            input(type="hidden", name="currentImageUrl", value=product.imageUrl)
+            
+            .form-group
+              label(for="name") Nome Comum
+              input(type="text", id="name", name="name", value="#{product.name2}", required)
+            
+            .form-group
+              label(for="name2") Nome Científico
+              input(type="text", id="name2", name="name2", value="#{product.name2}", required)
+            
+            .form-group
+              label(for="description") Descrição
+              textarea(id="description", name="description", required) #{product.description}
+            
+            .form-group
+              label(for="life-cycle") Ciclo de Vida
+              textarea(id="life-cycle", name="life_cycle", required) #{product.life_cycle}
+            
+            .form-group
+              label(for="damage") Danos e Riscos
+              textarea(id="damage", name="damage", required) #{product.damage}
+            
+            .form-group
+            <label>Método</a>
+            
+            <select name="Metodo" id="Metodo">
+            each m in metodos
+              <option value="#{m.id}">#{m.name}</option>
+            </select>
+
+            .form-group
+            <label>Categoria</a>
+            
+            <select name="Categoria" id="Categoria">
+            each c in categorias
+              <option value="#{c.id}">#{c.name}</option>
+            </select>
+
+            .image-preview-group
+              label Imagem Atual da Praga
+              img(src="#{product.imageUrl}", alt="Barata-americana").current-image-preview
+              .form-group.full-width
+                    label.form-label(for="image") Nova Imagem (opcional)
+                    .file-upload-wrapper
+                      input.file-input(type="file", name="image", id="image", accept="image/*")
+                      label.file-label(for="image")
+                        span.file-icon 📁
+                        span.file-text Escolher arquivo
+                      .file-hint Formatos aceitos: JPG, PNG, GIF (máx. 5MB)
+            
+            .form-actions
+              a(href="/products/#{product.id}").btn.btn-secondary Cancelar
+              button(type="submit").btn.btn-primary Salvar Alterações
+
+    footer.main-footer
+      .container
+        p &copy; 2025 PestControl Pro. Todos os direitos reservados.
