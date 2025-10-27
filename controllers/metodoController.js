@@ -19,7 +19,7 @@ exports.show = async (req, res, next) => {
       [req.params.id]
     );
     if (rows.length === 0) return res.status(404).send('Produto não encontrado');
-    res.render('metodo/show', { product: rows[0] });
+    res.render('metodo/show', { metodo: rows[0] });
   } catch (err) {
     next(err);
   }
@@ -72,7 +72,7 @@ exports.edit = async (req, res, next) => {
       [req.params.id]
     );
     if (rows.length === 0) return res.status(404).send('Métoddo não encontrado');
-    res.render('metodo/edit', { product: rows[0] });
+    res.render('metodo/edit', { metodo:rows[0] });
   } catch (err) {
     next(err);
   }
