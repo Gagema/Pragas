@@ -3,8 +3,10 @@ html(lang="pt-BR")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
     //- O título agora usa a variável 'metodo' para ser dinâmico e claro
     title metodo.name | Métodos de Controle - PestControl Pro
+
     style.
       :root {
           --primary-color: #2a7a3e; --secondary-color: #ff9800; --dark-color: #333333;
@@ -35,12 +37,15 @@ html(lang="pt-BR")
           gap: 40px; align-items: flex-start;
       }
       .pest-image-wrapper img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
       .pest-info .pest-title { font-size: 2.5rem; margin-bottom: 20px; color: var(--dark-color); }
+
       .detail-section { margin-bottom: 30px; }
       .detail-section h3 {
           font-size: 1.3rem; color: var(--primary-color); margin-bottom: 10px;
           padding-bottom: 5px; border-bottom: 2px solid var(--border-color);
       }
+
       .detail-section p {
           line-height: 1.7;
           white-space: pre-wrap; /* Para preservar quebras de linha na descrição */
@@ -49,6 +54,7 @@ html(lang="pt-BR")
         color: var(--dark-color);
         margin-right: 8px;
       }
+
       .admin-actions {
           margin-top: 30px; padding: 20px; background-color: #f9f9f9;
           border-radius: 8px; border: 1px solid var(--border-color); display: flex; gap: 15px; align-items: center;
@@ -66,17 +72,20 @@ html(lang="pt-BR")
         a(href="/").logo PestControl Pro
         ul
           li
+
             a(href="/nossosprodutos") Pragas
           li
             a(href="/nossascategorias") Categorias
           li
             a(href="/nossosmetodos") Métodos de Controle
 
+
     main
       .container
         .pest-detail-layout
           // Coluna da Imagem
           .pest-image-wrapper
+
             if (metodo.imageUrl)
               img(src=metodo.imageUrl, alt=metodo.name)
             else 
@@ -123,6 +132,7 @@ html(lang="pt-BR")
               a(href="/metodo/#{metodo.id}/edit").btn.btn-edit Editar Método
               form(method="POST", action="/metodo/#{metodo.id}?_method=DELETE", style="display:inline; margin:0;")
                 button(type="submit", onclick="return confirm('Tem certeza que deseja excluir este método?')").btn.btn-delete Excluir Método
+
 
     footer.main-footer
       .container

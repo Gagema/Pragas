@@ -52,7 +52,6 @@ app.use(logger('dev'));
 
 // Parsers de corpo
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 // Suporte a método override para PUT/DELETE via forms

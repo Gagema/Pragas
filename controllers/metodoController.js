@@ -20,6 +20,7 @@ exports.show = async (req, res, next) => {
     );
     if (rows.length === 0) return res.status(404).send('Produto não encontrado');
     res.render('metodo/show', { metodo: rows[0] });
+
   } catch (err) {
     next(err);
   }
@@ -42,6 +43,7 @@ exports.create = async (req, res, next) => {
    
     // Se houver upload, use o filename; senão, null
     const imageUrl    = req.file ? '/images/' + req.file.filename : null;
+
 
     const principios_ativos = req.body.principios_ativos || null;
     const manejo_integrado = req.body.manejo_integrado || null;
@@ -71,6 +73,7 @@ exports.edit = async (req, res, next) => {
       'SELECT * FROM Metodo WHERE id = ?',
       [req.params.id]
     );
+
     if (rows.length === 0) return res.status(404).send('Métoddo não encontrado');
     res.render('metodo/edit', { metodo: rows[0] });
   } catch (err) {
@@ -81,7 +84,9 @@ exports.edit = async (req, res, next) => {
 // controllers/productController.js
 exports.update = async (req, res, next) => {
   try {
+
     const { name, description, currentImageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias } = req.body;
+
     // se veio arquivo, use a nova imagem; senão, mantenha a antiga
     const imageUrl = req.file
       ? '/images/' + req.file.filename
@@ -99,6 +104,7 @@ exports.update = async (req, res, next) => {
              updatedAt   = CURRENT_TIMESTAMP
        WHERE id = ?`,
       [ name, description,  imageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias, req.params.id ]
+
     );
 
     res.redirect('/nossosmetodos');

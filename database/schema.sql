@@ -49,9 +49,15 @@ CREATE TABLE Categoria (
 CREATE TABLE Metodo (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
+<<<<<<< HEAD
 
   description TEXT,
 
+=======
+  
+  description TEXT,
+ 
+>>>>>>> 9d91fff24bb312fd69589137c4f9296be207d72a
   imageUrl VARCHAR(255),
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -67,6 +73,7 @@ CREATE TABLE carrinho(
     
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+<<<<<<< HEAD
 );
 
 ALTER TABLE Metodo
@@ -74,3 +81,6 @@ ADD COLUMN principios_ativos varchar(1000),
 ADD COLUMN manejo_integrado TEXT,
 ADD COLUMN dosagem_recomendada VARCHAR(255),
 ADD COLUMN carencia_dias INT;
+=======
+);
+>>>>>>> 9d91fff24bb312fd69589137c4f9296be207d72a
