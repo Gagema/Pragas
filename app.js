@@ -6,6 +6,7 @@ var logger           = require('morgan');
 var session          = require('express-session');
 var methodOverride   = require('method-override');
 
+
 // Conexão com pool MySQL via db.js
 const pool           = require('./db');
 
@@ -51,6 +52,7 @@ app.use(logger('dev'));
 
 // Parsers de corpo
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 // Suporte a método override para PUT/DELETE via forms
@@ -128,7 +130,7 @@ app.use((err, req, res, next) => {
 });
 
 // Inicia o servidor
-const port = process.env.PORT || 3160;
+const port = process.env.PORT || 3210;
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
 
 module.exports = app;

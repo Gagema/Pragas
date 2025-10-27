@@ -77,7 +77,7 @@ html(lang="pt-BR")
         .pest-detail-layout
           // Coluna da Imagem
           .pest-image-wrapper
-            if metodo.imageUrl
+            if (metodo.imageUrl)
               img(src=metodo.imageUrl, alt=metodo.name)
             else 
               // Placeholder caso não haja imagem
