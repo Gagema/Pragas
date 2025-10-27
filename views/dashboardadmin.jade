@@ -1,53 +1,241 @@
-extends layout
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Painel Admin | PestControl Pro
+    style.
+      /* --- Reset Básico e Estilos Globais (Copiado do seu layout) --- */
+      :root {
+          --primary-color: #2a7a3e; /* Verde escuro */
+          --secondary-color: #ff9800; /* Laranja para destaque */
+          --dark-color: #333333;
+          --light-color: #f4f4f4;
+          --background-color: #ffffff;
+          --border-color: #ddd; /* Adicionada para a tabela */
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6;
+          color: var(--dark-color);
+          background-color: var(--light-color);
+      }
+      .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+      h1, h2 { font-weight: 600; margin-bottom: 20px; }
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2rem; }
+      section { padding: 60px 0; }
+      .btn {
+          display: inline-block; padding: 12px 28px; background-color: var(--secondary-color);
+          color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold;
+          transition: background-color 0.3s ease;
+      }
+      .btn:hover { background-color: #e68900; }
 
-block content
-  if session.usuario && session.usuario.funcao === 'admin'
-    .products-section
-      .container
-        .admin-header
-          h2.admin-title Lista de produtos em catálogo
+      /* --- Cabeçalho e Navegação (Copiado do seu layout) --- */
+      .main-header {
+          background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          position: sticky; top: 0; z-index: 1000;
+      }
+      .main-nav { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+      .main-nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+      .main-nav ul { list-style: none; display: flex; align-items: center; }
+      .main-nav ul li { margin-left: 20px; }
+      .main-nav ul a {
+          text-decoration: none; color: var(--dark-color); font-weight: 500;
+          transition: color 0.3s ease;
+      }
+      .main-nav ul a:hover { color: var(--primary-color); }
+      .main-nav ul a.active-admin {
+          color: var(--primary-color);
+          font-weight: bold;
+          border-bottom: 2px solid var(--primary-color);
+      }
+
+      /* Estilos para Usuário Logado (Copiado do seu layout) */
+      .user-greeting { margin-right: 15px; font-weight: 500; }
+      a.logout-btn {
+          background-color: var(--primary-color); color: #fff; padding: 8px 16px;
+          border-radius: 5px; font-weight: bold;
+      }
+      a.logout-btn:hover { background-color: #1e5a2d; color: #fff; }
+
+      /* --- Rodapé (Copiado do seu layout) --- */
+      .main-footer {
+          background-color: var(--dark-color); color: #fff;
+          text-align: center; padding: 30px 0; margin-top: 40px;
+      }
+
+      /* --- ESTILOS ESPECÍFICOS DO DASHBOARD --- */
+      .dashboard-header {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--light-color);
+        padding-bottom: 20px;
+      }
+      .dashboard-header h1 { color: var(--dark-color); }
+      .dashboard-header p { font-size: 1.1rem; color: #666; }
+      
+      .quick-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+      }
+      /* Botão de admin usa a cor primária, não a secundária */
+      .quick-links .btn-admin {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 12px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+      .quick-links .btn-admin:hover {
+        background-color: #1e5a2d;
+      }
+      
+      .admin-section h2 {
+        font-size: 1.8rem;
+        color: var(--dark-color);
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 10px;
+      }
+      
+      .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        border-radius: 8px;
+        overflow: hidden; /* Para o border-radius funcionar na tabela */
+      }
+      .admin-table th, .admin-table td {
+        padding: 12px 15px;
+        border: 1px solid var(--border-color);
+        text-align: left;
+        vertical-align: middle;
+      }
+      .admin-table thead {
+        background-color: var(--light-color);
+      }
+      .admin-table img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+      .admin-table .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .admin-table .btn-action {
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        color: white;
+      }
+      .admin-table .btn-edit { background-color: #007bff; }
+      .admin-table .btn-delete { background-color: #dc3545; }
+
+
+  body
+    header.main-header
+      nav.main-nav.container
+        a(href="/").logo PestControl Pro
+        ul
+          //- Condicional para Admin: Mostrar links de Admin
+          if session && session.usuario && session.usuario.funcao === 'admin'
+            li
+              //- Adicionada classe 'active-admin' para destacar a página atual
+              a(href="/dashboardadmin").active-admin Dashboard
+            li
+              a(href="/products/new") Nova Praga
+            li
+              a(href="/metodo/new") Novo Método
+            li
+              a(href="/categoria/new") Nova Categoria
           
-        .sidebar-card
-          table.admin-table
-            thead.admin-thead
-              tr
-                th.admin-th Nome
-                th.admin-th Preço
-                th.admin-th Imagem
-                th.admin-th Estoque
-                th.admin-th Ações
+          li
+            a(href="#features") Vantagens
+          li
+            a(href="#contact") Contato
+
+          //- Condicional para Visitante ou Usuário Logado (Copiado)
+          if !session || !session.usuario
+            li
+              a(href="/login").btn Entrar
+          else
+            li.user-greeting Olá, #{session.usuario.usuario}!
+            li
+              a(href="/logout").logout-btn Sair
+
+
+    main
+      section.dashboard-section
+        .container
+          .dashboard-header
+            h1 Painel do Administrador
+            p Gerencie pragas, métodos e categorias do sistema.
+
+          //- Links de Acesso Rápido
+          .quick-links
+            a(href="/products/new").btn-admin + Adicionar Praga
+            a(href="/metodo/new").btn-admin + Adicionar Método
+            a(href="/categoria/new").btn-admin + Adicionar Categoria
+
+          //- Seção de Produtos Recentes (que o seu controller 'dashboardadmin.js' envia)
+          .admin-section
+      h2 Pragas (praga) Cadastrados
+      
+      table.admin-table
+        thead
+          tr
+            th Imagem
+            th Nome da Praga
+            th Preço
+            th Estoque
+            th Ações
+        tbody
+          //- O loop 'each' está dentro de 'tbody'
+          each p in praga
+            //- O 'tr' está DENTRO do 'each'
+            tr
+              //- Todos os 'td' estão DENTRO do 'tr'
+              td
+                if p.imageUrl
+                  img(src=p.imageUrl, alt=p.name)
+                else
+                  img(src="https://placehold.co/60x60/f0f0f0/aaa?text=N/A", alt="Sem imagem")
+              
+              td #{p.name}
+              
+              td #{p.description}
+              
+              td #{p.lyfe_cycle}
+              
+              td.actions
+                a(href="/products/" + p.id + "/edit").btn-action.btn-edit Editar
                 
-            tbody.admin-tbody
-              each p in products
-                tr.admin-row
-                  td.admin-cell.admin-cell-name= p.name
-                  
-                  td.admin-cell
-                    span.product-price R$ #{p.price}
-                    
-                  td.admin-cell.admin-cell-image
-                    if p.imageUrl
-                      .image-container
-                        img.product-image(src=p.imageUrl, alt=p.name)
-                    else
-                      .image-placeholder
-                        span.placeholder-text (sem imagem)
-                        
-                  td.admin-cell.admin-cell-stock
-                    span.stock-value= p.stock
-                    
-                  td.admin-cell.admin-cell-actions
-                    .action-buttons
-                      a.btn.btn-view(href="/products/#{p.id}")
-                        span.btn-icon 👁
-                        span Ver
-                        
-                      a.btn.btn-edit(href="/products/#{p.id}/edit")
-                        span &#x270F
-                        span Editar
-                        
-                      form.delete-form(method="POST", action="/products/#{p.id}?_method=DELETE")
-                        input(type="hidden", name="_method", value="DELETE")
-                        button.btn.btn-delete(type="submit", onclick="return confirm('Tem certeza que deseja excluir este produto?')")
-                          span &#x1F5D1
-                          span Excluir
+                form(method="POST", action="/products/" + p.id + "?_method=DELETE", style="display:inline;")
+
+                  button(type="submit", onclick="return confirm('Tem certeza que deseja excluir esta praga?')").btn-action.btn-delete Excluir
+          
+          if praga.length === 0
+            tr
+              td(colspan="5", style="text-align:center; padding: 20px;") Nenhuma praga cadastrada ainda.
+
+
+    footer.main-footer
+      .container
+        p &copy; 2025 PestControl Pro. Todos os direitos reservados.
+        p Rua da Tecnologia, 123 - São Paulo, SP | contato@pestcontrolpro.com

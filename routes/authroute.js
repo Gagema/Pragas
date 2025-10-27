@@ -32,7 +32,12 @@ router.post('/login', async (req, res) => {
       usuario: user.usuario,
       funcao: user.funcao
     };
-    res.redirect('/'); // redireciona para a página inicial ou outra página protegida
+
+    if(user.funcao=='admin'){
+      res.redirect('/dashboardadmin'); // redireciona para dashboardadmin
+    }else{
+      res.redirect('/'); // redireciona para home
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send('Erro no servidor');

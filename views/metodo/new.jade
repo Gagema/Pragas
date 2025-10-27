@@ -3,11 +3,9 @@ html(lang="pt-BR")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-<<<<<<< HEAD
+
     title Cadastrar Método | Painel Admin - PestControl Pro
-=======
-    title Cadastrar Praga | Painel Admin - PestControl Pro
->>>>>>> 9d91fff24bb312fd69589137c4f9296be207d72a
+
     style.
       /* --- Reset Básico e Estilos Globais (Consistentes com o site) --- */
       :root {
@@ -39,11 +37,9 @@ html(lang="pt-BR")
       }
       
       h2 { font-size: 2rem; }
-<<<<<<< HEAD
+
       h3 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
 
-=======
->>>>>>> 9d91fff24bb312fd69589137c4f9296be207d72a
 
       .btn {
           display: inline-block;
@@ -132,10 +128,8 @@ html(lang="pt-BR")
       }
       
       .form-group input[type="text"],
-<<<<<<< HEAD
       .form-group input[type="number"],
-=======
->>>>>>> 9d91fff24bb312fd69589137c4f9296be207d72a
+
       .form-group textarea {
           width: 100%;
           padding: 12px 15px;
@@ -168,28 +162,22 @@ html(lang="pt-BR")
       }
 
   body
-    // CABEÇALHO DO PAINEL ADMINISTRATIVO
-    header.admin-header
+     header.admin-header
       nav.admin-nav.container
-        a(href="#").logo PestControl Pro - Admin
+        a(href="/dashboardadmin").logo PestControl Pro - Admin
         ul
           li
-            a(href="#") Dashboard
+            a(href="/dashboardadmin") Dashboard
           li
-<<<<<<< HEAD
-            a(href="#") Métodos
-=======
-            a(href="#") Pragas
->>>>>>> 9d91fff24bb312fd69589137c4f9296be207d72a
+            a(href="/nossosmetodos") Métodos
           li
-            a(href="#") Usuários
+            a(href="/nossascategorias") Categorias
           li
-            a(href="#").logout-btn Sair
-
+            a(href="/logout").logout-btn Sair
     main
       .container
         .page-header
-<<<<<<< HEAD
+
           h2 Adicionar Novo Método
           p Preencha os detalhes abaixo para adicionar um novo método ao banco de dados.
 
@@ -200,7 +188,7 @@ html(lang="pt-BR")
 
           .form-group
             label(for="name") Nome do Método
-            input(type="text", id="name", name="name", placeholder="Ex: Controle Biológico com Joaninhas", required)
+            input(type="text", id="name", name="name", placeholder="Ex: Controle Biológico", required)
           
           .form-group
             label(for="description") Descrição Geral
@@ -229,35 +217,6 @@ html(lang="pt-BR")
             label(for='carencia_dias') Período de Carência (dias)
             input#carencia_dias.form-control(type='number', name='carencia_dias', placeholder="Ex: 15")
 
-=======
-          h2 Adicionar Nova Método
-          p Preencha os detalhes abaixo para adicionar uma nova categoria ao banco de dados do sistema.
 
-        // FORMULÁRIO DE CADASTRO DE PRAGA
-        form.pest-form(action="/metodo", method="POST", enctype="multipart/form-data")
-          
-          .form-group
-            label(for="name") Nome Comum
-            input(type="text", id="name", name="name", placeholder="Ex: Barata-americana", required)
-          
-          
-          .form-group
-            label(for="description") Descrição
-            textarea(id="description", name="description", placeholder="Descreva as características físicas, habitat e comportamento da praga.", required)
-          
-     
-          
-
-
-          .form-group
-              label.form-label Imagem do Produto
-              .file-upload-area
-                .file-upload-icon 📷
-                .file-upload-text
-                  span Clique para selecionar uma imagem
-                  small Ou arraste e solte aqui
-                input.file-input(type="file", name="image", accept="image/*")
-          
->>>>>>> 9d91fff24bb312fd69589137c4f9296be207d72a
           .form-actions
             button(type="submit").btn Salvar Método

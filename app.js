@@ -69,8 +69,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({                                 
   secret: 'umSegredoBemSecreto',
   resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 } // 1 hora
+  saveUninitialized: true,
+  cookie: { secure: false }
 }));
 app.use((req, res, next) => {
   res.locals.session = req.session;
@@ -88,15 +88,16 @@ app.use('/nossosmetodos', metodosRouter);
 app.use('/categorias/acessorios', acessoriosRouter);
 app.use('/categorias/roupas', roupasRouter);
 app.use('/categorias/eletronicos', eletronicosRouter);
-app.use('/categoria',categoriaRouter)
 
 // CRUD de produtos
-app.use('/products', estaLogado, productsRouter);
+// Rotas protegidas p/ admin
+app.use('/products', estaLogado,eAdmin,productsRouter);
+app.use('/metodo',estaLogado,eAdmin,metodoRouter);
+app.use('/categoria',estaLogado,eAdmin,categoriaRouter)
 
-// Rotas protegidas
+// Rotas protegidas p/ user logado
 app.use('/users', estaLogado, usersRouter);
 app.use('/carrinho', estaLogado, carrinhoRouter);
-app.use('/metodo',estaLogado, metodoRouter);
 app.use('/pedidos', estaLogado, pedidosRouter);
 app.use('/anunciar', estaLogado, anunciarRouter);
 app.use('/perfil', estaLogado, meuperfilRouter);

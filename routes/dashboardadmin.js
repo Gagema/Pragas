@@ -7,11 +7,11 @@ const pool  = require('../db');   // seu pool mysql2
 router.get('/', async (req, res, next) => {
   try {
     // busca 5 produtos
-    const [products] = await pool.query(
+    const [praga] = await pool.query(
       'SELECT * FROM products ORDER BY createdAt DESC'
     );
     // renderiza home.jade, enviando o array recentes
-    res.render('dashboardadmin', { products });
+    res.render('dashboardadmin', { praga });
   } catch (err) {
     next(err);
   }

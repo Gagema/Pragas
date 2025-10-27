@@ -3,7 +3,10 @@ html(lang="pt-BR")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Cadastrar Praga | Painel Admin - PestControl Pro
+    
+    
+    title Cadastrar Categoria | Painel Admin - PestControl Pro
+
     style.
       /* --- Reset Básico e Estilos Globais (Consistentes com o site) --- */
       :root {
@@ -29,12 +32,14 @@ html(lang="pt-BR")
       }
 
       .container {
-          max-width: 900px; /* Um pouco mais largo para o formulário */
+          max-width: 900px; 
           margin: 0 auto;
           padding: 0 20px;
       }
       
       h2 { font-size: 2rem; }
+      h3 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+
 
       .btn {
           display: inline-block;
@@ -123,6 +128,7 @@ html(lang="pt-BR")
       }
       
       .form-group input[type="text"],
+      .form-group input[type="number"],
       .form-group textarea {
           width: 100%;
           padding: 12px 15px;
@@ -158,47 +164,42 @@ html(lang="pt-BR")
     // CABEÇALHO DO PAINEL ADMINISTRATIVO
     header.admin-header
       nav.admin-nav.container
-        a(href="#").logo PestControl Pro - Admin
+        a(href="/dashboardadmin").logo PestControl Pro - Admin
         ul
           li
-            a(href="#") Dashboard
+            a(href="/dashboardadmin") Dashboard
           li
-            a(href="#") Pragas
+            a(href="/nossascategorias") Categorias
           li
-            a(href="#") Usuários
+            a(href="/nossosmetodos") Métodos
           li
-            a(href="#").logout-btn Sair
+            a(href="/logout").logout-btn Sair
 
     main
       .container
         .page-header
+          //- Textos alterados
           h2 Adicionar Nova Categoria
-          p Preencha os detalhes abaixo para adicionar uma nova categoria ao banco de dados do sistema.
+          p Preencha os detalhes abaixo para adicionar uma nova categoria ao banco de dados.
 
-        // FORMULÁRIO DE CADASTRO DE PRAGA
+        //- FORMULÁRIO DE CADASTRO
         form.pest-form(action="/categoria", method="POST", enctype="multipart/form-data")
           
-          .form-group
-            label(for="name") Nome Comum
-            input(type="text", id="name", name="name", placeholder="Ex: Barata-americana", required)
-          
-          
-          .form-group
-            label(for="description") Descrição
-            textarea(id="description", name="description", placeholder="Descreva as características físicas, habitat e comportamento da praga.", required)
-          
-     
-          
-
+          h3 Informações Gerais
 
           .form-group
-              label.form-label Imagem do Produto
-              .file-upload-area
-                .file-upload-icon 📷
-                .file-upload-text
-                  span Clique para selecionar uma imagem
-                  small Ou arraste e solte aqui
-                input.file-input(type="file", name="image", accept="image/*")
+            label(for="name") Nome da Categoria
+            input(type="text", id="name", name="name", placeholder="Ex: Insetos, Fungos, Ácaros", required)
           
+          .form-group
+            label(for="description") Descrição Geral
+            textarea(id="description", name="description", placeholder="Descreva o que esta categoria agrupa.", required)
+          
+          .form-group
+            label(for="image") Imagem da Categoria (opcional)
+            input.file-input(type="file", name="image", id="image", accept="image/*")
+
+
           .form-actions
+
             button(type="submit").btn Salvar Categoria
