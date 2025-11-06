@@ -91,22 +91,22 @@ app.use('/categorias/eletronicos', eletronicosRouter);
 
 // CRUD de produtos
 // Rotas protegidas p/ admin
-app.use('/products', estaLogado,eAdmin,productsRouter);
-app.use('/metodo',estaLogado,eAdmin,metodoRouter);
-app.use('/categoria',estaLogado,eAdmin,categoriaRouter)
+app.use('/products', productsRouter);
+app.use('/metodo', metodoRouter);
+app.use('/categoria', categoriaRouter)
 
 // Rotas protegidas p/ user logado
-app.use('/users', estaLogado, usersRouter);
-app.use('/carrinho', estaLogado, carrinhoRouter);
-app.use('/pedidos', estaLogado, pedidosRouter);
-app.use('/anunciar', estaLogado, anunciarRouter);
-app.use('/perfil', estaLogado, meuperfilRouter);
+app.use('/users', usersRouter);
+app.use('/carrinho', carrinhoRouter);
+app.use('/pedidos', pedidosRouter);
+app.use('/anunciar', anunciarRouter);
+app.use('/perfil', meuperfilRouter);
 
 // Rota admin
 app.get('/admin', estaLogado, eAdmin, (req, res) => {
   res.render('admin', { usuario: req.session.usuario });
 });
-app.use('/dashboardadmin', estaLogado, eAdmin, dashboardadminRouter);
+app.use('/dashboardadmin', dashboardadminRouter);
 
 // Exemplo de consulta direta usando pool
 app.get('/select', estaLogado, async (req, res) => {

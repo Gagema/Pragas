@@ -43,7 +43,43 @@ html(lang="pt-BR")
           display: grid; grid-template-columns: 1fr 1.5fr;
           gap: 40px; align-items: flex-start;
       }
-      .pest-image-wrapper img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+      .gallery-container {
+        width: 100%;
+      }
+      .gallery-main-image{
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        background-color: #eee;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+      }
+      .gallery-thumbnails {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+      }
+      .gallery-thumbnail {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.3s ease, transform 0.3s ease;
+      }
+      .gallery-thumbnail:hover {
+        transform: scale(1.05);
+        border-color: var(--primary-color);
+      }
+      .gallery-thumbnail.active {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 10px rgba(42, 122, 62, 0.5);
+      }
+
       .pest-info .pest-title { font-size: 2.5rem; margin-bottom: 5px; color: var(--dark-color); }
       .pest-info .pest-scientific-name { font-size: 1.2rem; font-style: italic; color: #666; margin-bottom: 30px; display: block; }
       .detail-section { margin-bottom: 30px; }
@@ -98,17 +134,33 @@ html(lang="pt-BR")
       nav.main-nav.container
         a(href="/").logo PestControl Pro
         ul
-          li
-            a(href="/#features") Vantagens
-          li
-            a(href="/#contact") Contato
+          if session && session.usuario && session.usuario.funcao ==='admin'
+            li: a(href="/dashboardadmin") Dashboard
+            li: a(href="/products/new") Nova Praga
+            li: a(href="/metodo/new") Novo Método
+            li: a(href="/categoria/new") Nova Categoria
+
+          li: a(href="/nossosprodutos") Pragas
+          li: a(href="/nossascategorias") Categorias
+          li: a(href="/nossosmetodos") Métodos
+
+          if !session.usuario
+            li: a(href="/login").btn Entrar
+          else
+            li.user-greeting Olá, #{session.usuario.usuario}!
+            li: a(href="/logout").logout-btn Sair
+
 
     main
       .container
         .pest-detail-layout
-          // Coluna da Imagem
-          .pest-image-wrapper
-            img(src=product.imageUrl, alt=product.name)
+          .gallery-container 
+            img(src=(gallery.length>0 ? gallery[0] : "http://placehold.co/400x300/f0f0f0/aaa?text=N/A"), alt=product.name, id="galleryMainImage").gallery-main-image
+
+            if gallery.length > 1
+              .gallery-thumbnails 
+                each imageUrl, index in gallery 
+                  img(src=imageUrl, alt='Visualização' + (index +1)).gallery-thumbnail(class=(index === 0 ? 'active' : ''))
 
           // Coluna de Informações
           .pest-info
@@ -127,28 +179,43 @@ html(lang="pt-BR")
               h3 Danos e Riscos
               p= product.damage
             
-            //- CORREÇÃO DE ESTILO E INDENTAÇÃO
-            .detail-section
-              h3 Método
-              //- Adicionada a classe .detail-link e corrigido o href
-              a(href="/metodo/" + metodos.id + "/").detail-link #{metodos.name}
+            if metodo && metodo.id 
+              .detail-section 
+              h3 Método 
+              a(href="/metodo/" + metodo.id).detail-link #{metodo.name}
 
-            //- CORREÇÃO DE ESTILO E INDENTAÇÃO
-            .detail-section
-              h3 Categoria
-              //- Adicionada a classe .detail-link e corrigido o href
-              a(href="/categoria/" + categorias.id + "/").detail-link #{categorias.name}
-            
-            //- Bloco de Ações do Admin (SINTAXE CORRIGIDA)
+            if categoria && categoria.id 
+              .detail-section 
+              h3 Categoria 
+              a(href="/categoria/" + categoria.id).detail-link #{categoria.name}
+
             if session && session.usuario && session.usuario.funcao === 'admin'
               .admin-actions
-                //- Corrigido o href para usar +
                 a(href="/products/" + product.id + "/edit").btn.btn-edit Editar Praga
                 
-                //- Corrigido o action para usar +
                 form(method="POST", action="/products/" + product.id + "?_method=DELETE", style="display:inline; margin:0;")
                   button(type="submit", onclick="return confirm('Tem certeza que deseja excluir esta praga?')").btn.btn-delete Excluir Praga
 
     footer.main-footer
       .container
         p &copy; 2025 PestControl Pro. Todos os direitos reservados.
+
+     script.
+      // Espera o documento carregar
+      document.addEventListener('DOMContentLoaded', function() {
+        const mainImage = document.getElementById('galleryMainImage');
+        const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+
+        if (mainImage && thumbnails.length > 0) {
+          thumbnails.forEach(function(thumb) {
+            thumb.addEventListener('click', function() {
+
+              thumbnails.forEach(t => t.classList.remove('active'));
+              
+              this.classList.add('active');
+              
+              mainImage.src = this.src;
+            });
+          });
+        }
+      });

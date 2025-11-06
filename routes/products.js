@@ -11,16 +11,21 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+const uploadFields = upload.fields([
+  {name:'image', maxCount: 1},
+  {name: 'gallery_images', maxCount: 8}
+]);
+
 // Rotas de CRUD de produtos
 router.get('/',         ctrl.index);
 router.get('/new',      ctrl.new);
-// Usa upload.single para processar multipart/form-data
-router.post('/',        upload.single('image'), ctrl.create);
+
+router.post('/',        uploadFields, ctrl.create); // upload.single('image'), ctrl.create);
 
 router.get('/:id',      ctrl.show);
-router.get('/:id/edit', upload.single('image'), ctrl.edit);
+router.get('/:id/edit', ctrl.edit);
 // Aplica upload.single em edit se quiser exibir preview, mas principalmente em update
-router.put('/:id',      upload.single('image'), ctrl.update);
+router.put('/:id',      uploadFields, ctrl.update); // upload.single('image'), ctrl.update);
 router.delete('/:id',   ctrl.destroy);
 
 

@@ -224,27 +224,25 @@ html(lang="pt-BR")
             textarea(id="damage", name="damage", placeholder="Liste os danos que a praga pode causar a estruturas, alimentos, e os riscos à saúde.", required)
           
           .form-group
-            <label>Método</a>
-            
-            <select name="Metodo" id="Metodo">
-            each m in metodos
-              <option value="#{m.id}">#{m.name}</option>
-            </select>
+            label(for="Método") Método
+            select(name="Metodo", id="Metodo")
+              each m in metodos
+                option(value=m.id) #{m.name}
+
           .form-group
-            <label>Categoria</a>
-            
-            <select name="Categoria" id="Categoria">
-            each c in categorias
-              <option value="#{c.id}">#{c.name}</option>
-            </select>
+            label(for="Categoria") Categoria
+            select(name="Categoria", id="Categoria")
+              each c in categorias
+                option(value=c.id) #{c.name}
+
           .form-group
-              label.form-label Imagem do Produto
-              .file-upload-area
-                .file-upload-icon 📷
-                .file-upload-text
-                  span Clique para selecionar uma imagem
-                  small Ou arraste e solte aqui
-                input.file-input(type="file", name="image", accept="image/*")
+            label(for="image") Imagem Principal
+            input.file-input(type="file", name="image", id="image", accept="image/*")
+          
+          
+          .form-group
+            label(for="gallery_images") Imagens da Galeria (Imagens detalhadas da praga)
+            input.file-input(type="file", name="gallery_images", id="gallery_images", multiple=true, accept="image/*")
           
           .form-actions
             button(type="submit").btn Salvar Praga

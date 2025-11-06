@@ -43,24 +43,74 @@ html(lang="pt-BR")
       }
       .form-group { margin-bottom: 25px; }
       .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
-      .form-group input[type="text"], .form-group textarea {
+      .form-group input[type="text"], 
+      .form-group textarea,
+      .form-group select {
           width: 100%; padding: 12px 15px; border: 1px solid var(--border-color);
           border-radius: 5px; font-size: 1rem; transition: border-color 0.3s ease;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          background-color: #fff;
       }
       .form-group textarea { resize: vertical; min-height: 120px; }
-      .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); }
-      .image-preview-group { margin-bottom: 25px; }
-      .image-preview-group label { margin-bottom: 15px; }
+      .form-group input:focus, 
+      .form-group textarea:focus,
+      .form-group select:focus { 
+          outline: none; border-color: var(--primary-color); 
+      }
+      
+      .image-preview-group { margin-top: 30px; }
+      .image-preview-group label { display: block; margin-bottom: 15px; font-weight: 600; color: #555; }
       .current-image-preview {
           width: 150px; height: 112.5px; object-fit: cover; border: 1px solid var(--border-color);
           border-radius: 5px; margin-bottom: 15px; display: block;
       }
       .form-group input[type="file"] {
           padding: 10px; background-color: #f9f9f9; border: 1px solid var(--border-color);
-          border-radius: 5px; width: auto; display: block;
+          border-radius: 5px; width: 100%; display: block;
       }
       .form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
-      .main-footer { background-color: var(--dark-color); color: #fff; text-align: center; padding: 30px 0; }
+      .main-footer { background-color: var(--dark-color); color: #fff; text-align: center; padding: 30px 0;
+      }
+      
+      .gallery-edit-container { margin-top: 20px; }
+      .gallery-edit-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+        gap: 10px; 
+        margin-top: 10px;
+      }
+      .gallery-image-item { 
+        position: relative; 
+        border: 2px solid transparent;
+      }
+      .gallery-image-item img { 
+        width: 100%; 
+        height: 100px; 
+        object-fit: cover; 
+        border-radius: 5px; 
+      }
+      .gallery-image-item .delete-img-label {
+        position: absolute; top: 5px; right: 5px; background: rgba(220, 53, 69, 0.8);
+        color: white; border: none; border-radius: 50%; width: 24px; height: 24px;
+        cursor: pointer; font-weight: bold; font-size: 14px; line-height: 24px; text-align: center;
+        transition: background-color 0.3s;
+      }
+      .gallery-image-item .delete-img-label:hover {
+        background: rgba(220, 53, 69, 1);
+      }
+      /* Oculta o checkbox real */
+      .gallery-image-item input[type="checkbox"] { display: none; } 
+      
+      /* Quando o checkbox está marcado (via clique no label), muda o estilo */
+      .gallery-image-item input[type="checkbox"]:checked ~ img { 
+        opacity: 0.4;
+      }
+      .gallery-image-item input[type="checkbox"]:checked ~ .delete-img-label { 
+        background: #6c757d;
+        /* Mostra um "check" de remoção (pode não funcionar em todos os browsers, mas a opacidade sim) */
+        content: '✓'; 
+      }
+      
 
       @media (max-width: 768px) {
         .admin-nav{
@@ -112,16 +162,18 @@ html(lang="pt-BR")
           p Modifique as informações da praga e salve as alterações.
 
         .edit-form-container
-          form(method='POST', action=`/products/${product.id}?_method=PUT`, enctype="multipart/form-data")
+          form(method='POST', action="/products/" + product.id + "?_method=PUT", enctype="multipart/form-data")
             input(type="hidden", name="currentImageUrl", value=product.imageUrl)
             
+            h3 Informações Gerais
+
             .form-group
               label(for="name") Nome Comum
-              input(type="text", id="name", name="name", value="#{product.name}", required)
+              input(type="text", id="name", name="name", value=product.name, required)
             
             .form-group
               label(for="name2") Nome Científico
-              input(type="text", id="name2", name="name2", value="#{product.name2}", required)
+              input(type="text", id="name2", name="name2", value=product.name2, required)
             
             .form-group
               label(for="description") Descrição
@@ -136,35 +188,48 @@ html(lang="pt-BR")
               textarea(id="damage", name="damage", required) #{product.damage}
             
             .form-group
-            <label>Método</a>
-            
-            <select name="Metodo" id="Metodo">
-            each m in metodos
-              <option value="#{m.id}">#{m.name}</option>
-            </select>
+            label(for="Método") Método
+            select(name="Metodo", id="Metodo")
+              each m in metodos
+                option(value=m.id, selected=(product.Metodo_id == m.id)) #{m.name}
 
             .form-group
-            <label>Categoria</a>
-            
-            <select name="Categoria" id="Categoria">
-            each c in categorias
-              <option value="#{c.id}">#{c.name}</option>
-            </select>
+            label(for="Categoria") Categoria
+            select(name="Categoria", id="Categoria")
+              each c in categorias
+                option(value=c.id, selected=(product.Categoria_id == c.id)) #{c.name}
+
+            h3 Imagens
 
             .image-preview-group
-              label Imagem Atual da Praga
-              img(src="#{product.imageUrl}", alt="Barata-americana").current-image-preview
-              .form-group.full-width
-                    label.form-label(for="image") Nova Imagem (opcional)
-                    .file-upload-wrapper
-                      input.file-input(type="file", name="image", id="image", accept="image/*")
-                      label.file-label(for="image")
-                        span.file-icon 📁
-                        span.file-text Escolher arquivo
-                      .file-hint Formatos aceitos: JPG, PNG, GIF (máx. 5MB)
-            
+              label Imagem Principal Atual da Praga
+              if product.imageUrl
+                img(src=product.imageUrl, alt=product.name).current-image-preview
+              else 
+                p Nenhuma imagem principal cadastrada.
+              .form-group
+                label.form-label(for="image") Alterar Imagem Principal (opcional)
+                input.file-input(type="file", name="image", id="image", accept="image/*")
+
+              .form-group.gallery-edit-container
+              label Imagens da Galeria Atuais (Clique no X para remover)
+              - var gallery = (product.gallery_images ? JSON.parse(product.gallery_images) : [])
+              if gallery.length > 0
+                .gallery-edit-grid
+                  each imgUrl in gallery
+                    .gallery-image-item
+                      input(type="checkbox", name="delete_gallery_images[]", value=imgUrl, id="del_" + imgUrl)
+                      img(src=imgUrl, alt="Imagem da Galeria")
+                      label(for="del_" + imgUrl).delete-img-label x
+              else
+                p Nenhuma imagem na galeria.
+
+              .form-group
+              label(for="gallery_images") Adicionar Novas Imagens à Galeria
+              input.file-input(type="file", name="gallery_images", id="gallery_images", multiple=true, accept="image/*")
+
             .form-actions
-              a(href="/products/#{product.id}").btn.btn-secondary Cancelar
+              a(href="/products/" + product.id).btn.btn-secondary Cancelar
               button(type="submit").btn.btn-primary Salvar Alterações
 
     footer.main-footer
