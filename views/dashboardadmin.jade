@@ -53,7 +53,6 @@ html(lang="pt-BR")
           border-bottom: 2px solid var(--primary-color);
       }
 
-      /* Estilos para Usuário Logado (Copiado do seu layout) */
       .user-greeting { margin-right: 15px; font-weight: 500; }
       a.logout-btn {
           background-color: var(--primary-color); color: #fff; padding: 8px 16px;
@@ -61,7 +60,6 @@ html(lang="pt-BR")
       }
       a.logout-btn:hover { background-color: #1e5a2d; color: #fff; }
 
-      /* --- Rodapé (Copiado do seu layout) --- */
       .main-footer {
           background-color: var(--dark-color); color: #fff;
           text-align: center; padding: 30px 0; margin-top: 40px;
@@ -147,6 +145,45 @@ html(lang="pt-BR")
       .admin-table .btn-edit { background-color: #007bff; }
       .admin-table .btn-delete { background-color: #dc3545; }
 
+      @media (max-width: 768px) {
+        .main-nav {
+          flex-direction: column;
+          height: auto;
+          padding: 15px 0;
+        }
+        .main-nav ul {
+          margin-top: 15px;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+        }
+        .main-nav ul li {
+          margin: 0;
+        }
+        .container {
+          padding: 0 10px;
+        }
+        .dashboard-header h1 {
+          font-size: 2rem;
+        }
+        .quick-links {
+          gap: 10px;
+        }
+      }
+
+      .table-responsive-wrapper {
+        width: 100%;
+        overflow-x: auto; 
+        -webkit-overflow-scrolling: touch;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      
+      .table-responsive-wrapper .admin-table {
+        min-width: 800px; 
+        border: none; 
+      }
 
   body
     header.main-header
@@ -197,42 +234,42 @@ html(lang="pt-BR")
           .admin-section
       h2 Pragas (praga) Cadastrados
       
-      table.admin-table
-        thead
-          tr
-            th Imagem
-            th Nome da Praga
-            th Preço
-            th Estoque
-            th Ações
-        tbody
-          //- O loop 'each' está dentro de 'tbody'
-          each p in praga
-            //- O 'tr' está DENTRO do 'each'
+      .table-responsive-wrapper
+        table.admin-table
+          thead
             tr
-              //- Todos os 'td' estão DENTRO do 'tr'
-              td
-                if p.imageUrl
-                  img(src=p.imageUrl, alt=p.name)
-                else
-                  img(src="https://placehold.co/60x60/f0f0f0/aaa?text=N/A", alt="Sem imagem")
-              
-              td #{p.name}
-              
-              td #{p.description}
-              
-              td #{p.lyfe_cycle}
-              
-              td.actions
-                a(href="/products/" + p.id + "/edit").btn-action.btn-edit Editar
+              th Imagem
+              th Nome da Praga
+              th Descrição
+              th Ciclo de Vida
+          tbody
+            //- O loop 'each' está dentro de 'tbody'
+            each p in praga
+              //- O 'tr' está DENTRO do 'each'
+              tr
+                //- Todos os 'td' estão DENTRO do 'tr'
+                td
+                  if p.imageUrl
+                    img(src=p.imageUrl, alt=p.name)
+                  else
+                    img(src="https://placehold.co/60x60/f0f0f0/aaa?text=N/A", alt="Sem imagem")
                 
-                form(method="POST", action="/products/" + p.id + "?_method=DELETE", style="display:inline;")
+                td #{p.name}
+                
+                td #{p.description}
+                
+                td #{p.lyfe_cycle}
+                
+                td.actions
+                  a(href="/products/" + p.id + "/edit").btn-action.btn-edit Editar
+                  
+                  form(method="POST", action="/products/" + p.id + "?_method=DELETE", style="display:inline;")
 
-                  button(type="submit", onclick="return confirm('Tem certeza que deseja excluir esta praga?')").btn-action.btn-delete Excluir
-          
-          if praga.length === 0
-            tr
-              td(colspan="5", style="text-align:center; padding: 20px;") Nenhuma praga cadastrada ainda.
+                    button(type="submit", onclick="return confirm('Tem certeza que deseja excluir esta praga?')").btn-action.btn-delete Excluir
+            
+            if praga.length === 0
+              tr
+                td(colspan="5", style="text-align:center; padding: 20px;") Nenhuma praga cadastrada ainda.
 
 
     footer.main-footer

@@ -31,6 +31,14 @@ html(lang="pt-BR")
       .main-nav ul li { margin-left: 20px; }
       .main-nav ul a { text-decoration: none; color: var(--dark-color); font-weight: 500; }
       .main-nav ul a.logout-btn { color: var(--secondary-color); font-weight: bold; }
+      
+      .user-greeting { margin-right: 15px; font-weight: 500; }
+      a.logout-btn {
+          background-color: var(--primary-color); color: #fff; padding: 8px 16px;
+          border-radius: 5px; font-weight: bold;
+      }
+      a.logout-btn:hover { background-color: #1e5a2d; color: #fff; }
+      
       main { padding: 60px 0; }
       .pest-detail-layout {
           display: grid; grid-template-columns: 1fr 1.5fr;
@@ -64,7 +72,22 @@ html(lang="pt-BR")
       .btn-delete { background-color: var(--danger-color); }
       .btn-delete:hover { background-color: #c82333; }
       .main-footer { background-color: var(--dark-color); color: #fff; text-align: center; padding: 30px 0; margin-top: 60px; }
-      @media (max-width: 800px) { .pest-detail-layout { grid-template-columns: 1fr; } }
+      
+       @media (max-width: 800px) { 
+        .pest-detail-layout { grid-template-columns: 1fr; } 
+      }
+
+      /* --- Bloco de Responsividade (Adicionado) --- */
+      @media (max-width: 768px) {
+          h1, .pest-info .pest-title { font-size: 2.2rem; }
+          h2 { font-size: 1.8rem; }
+          .main-nav { flex-direction: column; height: auto; padding: 15px 0; }
+          .main-nav ul { margin-top: 15px; flex-direction: column; align-items: center; gap: 10px; }
+          .main-nav ul li { margin: 10px 0; margin-left: 0; }
+          .admin-actions { flex-direction: column; align-items: stretch; } /* Empilha botões de admin */
+          .admin-actions form, .admin-actions a { width: 100%; }
+          .admin-actions button, .admin-actions a { width: 100%; text-align: center; }
+      }
 
   body
     header.main-header
