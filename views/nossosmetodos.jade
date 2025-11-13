@@ -1,0 +1,131 @@
+extends layout
+
+block content
+  style.
+      /* --- Reset Básico e Estilos Globais --- */
+      :root {
+          --primary-color: #2a7a3e; /* Verde escuro */
+          --secondary-color: #ff9800; /* Laranja para destaque */
+          --dark-color: #333333;
+          --light-color: #f4f4f4;
+          --background-color: #ffffff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6;
+          color: var(--dark-color);
+          background-color: var(--light-color);
+      }
+      .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+      h1, h2 { font-weight: 600; margin-bottom: 20px; }
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2rem; }
+      section { padding: 60px 0; }
+      .btn {
+          display: inline-block; padding: 12px 28px; background-color: var(--secondary-color);
+          color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold;
+          transition: background-color 0.3s ease;
+      }
+      .btn:hover { background-color: #e68900; }
+
+      /* --- Cabeçalho e Navegação --- */
+      .main-header {
+          background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          position: sticky; top: 0; z-index: 1000;
+      }
+      .main-nav { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+      .main-nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+      .main-nav ul { list-style: none; display: flex; align-items: center; }
+      .main-nav ul li { margin-left: 20px; }
+      .main-nav ul a {
+          text-decoration: none; color: var(--dark-color); font-weight: 500;
+          transition: color 0.3s ease;
+      }
+      .main-nav ul a:hover { color: var(--primary-color); }
+
+      /* --- Estilos para Usuário Logado --- */
+      .user-greeting { margin-right: 15px; font-weight: 500; }
+      a.logout-btn {
+        background-color: var(--primary-color); color: #fff; padding: 8px 16px;
+        border-radius: 5px; font-weight: bold;
+      }
+      a.logout-btn:hover { background-color: #1e5a2d; color: #fff; }
+
+      /* --- Seção de Pragas (Produtos) --- */
+      .products-section { padding: 60px 0; }
+      .products-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 30px;
+      }
+      .product-card {
+          background-color: var(--background-color);
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+          overflow: hidden;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .product-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      }
+      .product-image-container {
+          aspect-ratio: 4 / 3;
+          background-color: #f0f0f0;
+      }
+      .product-image {
+          width: 100%; height: 100%; object-fit: cover;
+      }
+      .product-placeholder {
+          width: 100%; height: 100%; display: flex; flex-direction: column;
+          align-items: center; justify-content: center; color: #888;
+      }
+      .placeholder-icon { font-size: 3rem; }
+      .product-content { padding: 20px; }
+      .product-title { font-size: 1.2rem; margin-bottom: 5px; color: var(--dark-color); }
+      .product-subtitle { font-size: 1rem; color: #666; font-style: italic; }
+      a.product-link { text-decoration: none; }
+
+      /* --- Rodapé --- */
+      .main-footer {
+          background-color: var(--dark-color); color: #fff;
+          text-align: center; padding: 30px 0; margin-top: 40px;
+      }
+
+      /* --- Responsividade --- */
+      @media (max-width: 768px) {
+          h1 { font-size: 2.2rem; }
+          h2 { font-size: 1.8rem; }
+          .main-nav { flex-direction: column; height: auto; padding: 15px 0; }
+          .main-nav ul { margin-top: 15px; flex-direction: column; align-items: center; gap: 10px; }
+          .main-nav ul li { margin: 10px 0; margin-left: 0; }
+      }
+
+  body
+    main
+      // SEÇÃO DE MÉTODOS
+      section.products-section
+        .container
+          h2 Métodos
+          .products-grid
+            //- Loop para exibir cada praga
+            each p in products
+              a(href=`/metodo/${p.id}`).product-link
+                .product-card
+                  .product-image-container
+                    if p.imageUrl
+                      img.product-image(src=p.imageUrl, alt=p.name)
+                    else
+                      .product-placeholder
+                        .placeholder-icon 🦗
+                        span Sem imagem
+                  .product-content
+                    h3.product-title= p.name
+                   
+
+    // RODAPÉ
+    footer.main-footer
+      .container
+        p &copy; 2025 PestControl Pro. Todos os direitos reservados.
+        p Rua da Tecnologia, 123 - São Paulo, SP | contato@pestcontrolpro.com

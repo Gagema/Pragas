@@ -1,0 +1,177 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Login | PestControl Pro
+    style.
+      /* --- Variáveis de Cor e Estilos Globais (Consistentes com o site principal) --- */
+      :root {
+          --primary-color: #2a7a3e; /* Verde escuro */
+          --secondary-color: #ff9800; /* Laranja para destaque */
+          --dark-color: #333333;
+          --light-color: #f4f4f4;
+          --background-color: #ffffff;
+          --border-color: #ddd;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6;
+          color: var(--dark-color);
+          background-color: var(--light-color); /* Fundo cinza claro para destacar o card */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 20px;
+      }
+
+      /* --- Estrutura do Card de Login --- */
+      .login-container {
+          background-color: var(--background-color);
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 400px;
+          text-align: center;
+      }
+
+      .login-header .logo {
+          font-size: 2rem;
+          font-weight: bold;
+          color: var(--primary-color);
+          text-decoration: none;
+          margin-bottom: 10px;
+          display: inline-block;
+      }
+
+      .login-header h1 {
+          font-size: 1.5rem;
+          margin-bottom: 25px;
+          color: #555;
+      }
+
+      /* --- Formulário --- */
+      .login-form .form-group {
+          margin-bottom: 20px;
+          text-align: left;
+      }
+
+      .login-form label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: 500;
+      }
+
+      .login-form input[type="text"],
+      .login-form input[type="password"] {
+          width: 100%;
+          padding: 12px 15px;
+          border: 1px solid var(--border-color);
+          border-radius: 5px;
+          font-size: 1rem;
+          transition: border-color 0.3s ease;
+      }
+
+      .login-form input:focus {
+          outline: none;
+          border-color: var(--primary-color);
+      }
+
+      /* --- Opções Adicionais (Lembrar de mim / Esqueci senha) --- */
+      .form-options {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 0.9rem;
+          margin-bottom: 25px;
+      }
+      
+      .form-options .remember-me {
+          display: flex;
+          align-items: center;
+      }
+      
+      .form-options .remember-me input {
+          margin-right: 5px;
+      }
+
+      .form-options a {
+          color: var(--primary-color);
+          text-decoration: none;
+          transition: text-decoration 0.3s;
+      }
+
+      .form-options a:hover {
+          text-decoration: underline;
+      }
+
+      /* --- Botão de Login --- */
+      .btn {
+          display: inline-block;
+          width: 100%;
+          padding: 12px 28px;
+          background-color: var(--primary-color);
+          color: #fff;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+          font-size: 1.1rem;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+          background-color: #1e5a2d; /* Um verde um pouco mais escuro */
+      }
+      
+      /* --- Links Inferiores --- */
+      .login-footer {
+          margin-top: 25px;
+          font-size: 0.9rem;
+      }
+      
+      .login-footer a {
+          color: var(--primary-color);
+          font-weight: bold;
+          text-decoration: none;
+      }
+      
+      .login-footer a:hover {
+          text-decoration: underline;
+      }
+
+  body
+    .login-container
+      header.login-header
+        a(href="index.html").logo PestControl Pro
+        h1 Acesse sua Plataforma
+
+      form.login-form(action="/login", method="POST")
+        .form-group
+          label(for="usuario") Usuário
+          input(type="text", id="usuario", name="usuario", placeholder="Seu usuário", required)
+        .form-group
+          label(for="senha") Senha
+          input(type="password", id="senha", name="senha", placeholder="Sua senha", required)
+        
+        .form-options
+          .remember-me
+            input(type="checkbox", id="remember")
+            label(for="remember") Lembrar de mim
+          a(href="#") Esqueci minha senha
+
+        button(type="submit").btn Entrar
+      
+      footer.login-footer
+        p Não tem uma conta? 
+          a(href="/register") Crie agora

@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .search-results
+    h1 Search results for "#{query}"
+    if message
+      p.message= message
+    else
+      ul.results
+        each row in results
+          li.result-item
+            .result-image
+              if row.imageUrl
+                img(src=row.imageUrl alt=row.name)
+            .result-content
+              h2
+                a(href=`/products/${row.id}`)= row.name
+              if row.name2
+                p.small Nome científico: #{row.name2}
+              if row.description
+                p= row.description.substring(0, 200) + (row.description.length > 200 ? '...' : '')

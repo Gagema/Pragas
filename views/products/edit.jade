@@ -1,0 +1,237 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Editar Praga: #{product.name} | Painel Admin - PestControl Pro
+    style.
+      /* --- Reset Básico e Estilos Globais (Consistentes com o site) --- */
+      :root {
+          --primary-color: #2a7a3e; --secondary-color: #ff9800; --dark-color: #333333;
+          --light-color: #f4f4f4; --background-color: #ffffff; --border-color: #ddd;
+          --danger-color: #dc3545; --info-color: #007bff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6; color: var(--dark-color); background-color: var(--light-color);
+      }
+      .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+      h2 { font-size: 2rem; margin-bottom: 20px; }
+      .btn {
+          display: inline-block; padding: 10px 24px; color: #fff; text-decoration: none; 
+          border-radius: 5px; font-weight: bold; transition: background-color 0.3s ease; 
+          cursor: pointer; border: none;
+      }
+      .btn-primary { background-color: var(--primary-color); }
+      .btn-primary:hover { background-color: #1e5a2d; }
+      .btn-secondary { background-color: #6c757d; }
+      .btn-secondary:hover { background-color: #5a6268; }
+      .admin-header { background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      .admin-nav { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+      .admin-nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+      .admin-nav ul { list-style: none; display: flex; }
+      .admin-nav ul li { margin-left: 20px; }
+      .admin-nav ul a { text-decoration: none; color: var(--dark-color); font-weight: 500; }
+      .admin-nav ul a.active { color: var(--primary-color); font-weight: bold; }
+      .admin-nav ul a.logout-btn { color: var(--secondary-color); font-weight: bold; }
+      main { padding: 40px 0; }
+      .page-header { text-align: center; margin-bottom: 40px; }
+      .edit-form-container {
+          background-color: var(--background-color); padding: 30px; border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      }
+      .form-group { margin-bottom: 25px; }
+      .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+      .form-group input[type="text"], 
+      .form-group textarea,
+      .form-group select {
+          width: 100%; padding: 12px 15px; border: 1px solid var(--border-color);
+          border-radius: 5px; font-size: 1rem; transition: border-color 0.3s ease;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          background-color: #fff;
+      }
+      .form-group textarea { resize: vertical; min-height: 120px; }
+      .form-group input:focus, 
+      .form-group textarea:focus,
+      .form-group select:focus { 
+          outline: none; border-color: var(--primary-color); 
+      }
+      
+      .image-preview-group { margin-top: 30px; }
+      .image-preview-group label { display: block; margin-bottom: 15px; font-weight: 600; color: #555; }
+      .current-image-preview {
+          width: 150px; height: 112.5px; object-fit: cover; border: 1px solid var(--border-color);
+          border-radius: 5px; margin-bottom: 15px; display: block;
+      }
+      .form-group input[type="file"] {
+          padding: 10px; background-color: #f9f9f9; border: 1px solid var(--border-color);
+          border-radius: 5px; width: 100%; display: block;
+      }
+      .form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
+      .main-footer { background-color: var(--dark-color); color: #fff; text-align: center; padding: 30px 0;
+      }
+      
+      .gallery-edit-container { margin-top: 20px; }
+      .gallery-edit-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+        gap: 10px; 
+        margin-top: 10px;
+      }
+      .gallery-image-item { 
+        position: relative; 
+        border: 2px solid transparent;
+      }
+      .gallery-image-item img { 
+        width: 100%; 
+        height: 100px; 
+        object-fit: cover; 
+        border-radius: 5px; 
+      }
+      .gallery-image-item .delete-img-label {
+        position: absolute; top: 5px; right: 5px; background: rgba(220, 53, 69, 0.8);
+        color: white; border: none; border-radius: 50%; width: 24px; height: 24px;
+        cursor: pointer; font-weight: bold; font-size: 14px; line-height: 24px; text-align: center;
+        transition: background-color 0.3s;
+      }
+      .gallery-image-item .delete-img-label:hover {
+        background: rgba(220, 53, 69, 1);
+      }
+      /* Oculta o checkbox real */
+      .gallery-image-item input[type="checkbox"] { display: none; } 
+      
+      /* Quando o checkbox está marcado (via clique no label), muda o estilo */
+      .gallery-image-item input[type="checkbox"]:checked ~ img { 
+        opacity: 0.4;
+      }
+      .gallery-image-item input[type="checkbox"]:checked ~ .delete-img-label { 
+        background: #6c757d;
+        /* Mostra um "check" de remoção (pode não funcionar em todos os browsers, mas a opacidade sim) */
+        content: '✓'; 
+      }
+      
+
+      @media (max-width: 768px) {
+        .admin-nav{
+          flex-direction: column;
+          height: auto;
+          padding: 15px 0;
+        }
+        .admin-nav ul {
+          margin-top: 15px;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+        }
+        .admin-nav ul li {
+          margin: 0;
+        }
+        .container {
+          padding: 0 10px;
+        }
+        .edit-form-container {
+          padding: 20px;
+        }
+        .page-header h2 {
+          font-size:1.8rem;
+        }
+        .form-action {
+          flex-direction: column-reverse;
+        }
+        .form-actions .btn {
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+  body
+    header.admin-header
+      nav.admin-nav.container
+        a(href="#").logo PestControl Pro - Admin
+        ul
+          li: a(href="#") Dashboard
+          li: a(href="/admin_listar_pragas.html").active Pragas
+          li: a(href="#") Usuários
+          li: a(href="#").logout-btn Sair
+
+    main
+      .container
+        .page-header
+          h2 Editar Praga: Barata-americana
+          p Modifique as informações da praga e salve as alterações.
+
+        .edit-form-container
+          form(method='POST', action="/products/" + product.id + "?_method=PUT", enctype="multipart/form-data")
+            input(type="hidden", name="currentImageUrl", value=product.imageUrl)
+            
+            h3 Informações Gerais
+
+            .form-group
+              label(for="name") Nome Comum
+              input(type="text", id="name", name="name", value=product.name, required)
+            
+            .form-group
+              label(for="name2") Nome Científico
+              input(type="text", id="name2", name="name2", value=product.name2, required)
+            
+            .form-group
+              label(for="description") Descrição
+              textarea(id="description", name="description", required) #{product.description}
+            
+            .form-group
+              label(for="life-cycle") Ciclo de Vida
+              textarea(id="life-cycle", name="life_cycle", required) #{product.life_cycle}
+            
+            .form-group
+              label(for="damage") Danos e Riscos
+              textarea(id="damage", name="damage", required) #{product.damage}
+            
+            .form-group
+            label(for="Método") Método
+            select(name="Metodo", id="Metodo")
+              each m in metodos
+                option(value=m.id, selected=(product.Metodo_id == m.id)) #{m.name}
+
+            .form-group
+            label(for="Categoria") Categoria
+            select(name="Categoria", id="Categoria")
+              each c in categorias
+                option(value=c.id, selected=(product.Categoria_id == c.id)) #{c.name}
+
+            h3 Imagens
+
+            .image-preview-group
+              label Imagem Principal Atual da Praga
+              if product.imageUrl
+                img(src=product.imageUrl, alt=product.name).current-image-preview
+              else 
+                p Nenhuma imagem principal cadastrada.
+              .form-group
+                label.form-label(for="image") Alterar Imagem Principal (opcional)
+                input.file-input(type="file", name="image", id="image", accept="image/*")
+
+              .form-group.gallery-edit-container
+              label Imagens da Galeria Atuais (Clique no X para remover)
+              - var gallery = (product.gallery_images ? JSON.parse(product.gallery_images) : [])
+              if gallery.length > 0
+                .gallery-edit-grid
+                  each imgUrl in gallery
+                    .gallery-image-item
+                      input(type="checkbox", name="delete_gallery_images[]", value=imgUrl, id="del_" + imgUrl)
+                      img(src=imgUrl, alt="Imagem da Galeria")
+                      label(for="del_" + imgUrl).delete-img-label x
+              else
+                p Nenhuma imagem na galeria.
+
+              .form-group
+              label(for="gallery_images") Adicionar Novas Imagens à Galeria
+              input.file-input(type="file", name="gallery_images", id="gallery_images", multiple=true, accept="image/*")
+
+            .form-actions
+              a(href="/products/" + product.id).btn.btn-secondary Cancelar
+              button(type="submit").btn.btn-primary Salvar Alterações
+
+    footer.main-footer
+      .container
+        p &copy; 2025 PestControl Pro. Todos os direitos reservados.

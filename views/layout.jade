@@ -1,0 +1,45 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{typeof title !== 'undefined' ? title : 'PestControl Pro'}
+    // Fonte
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com" crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap", rel="stylesheet")
+    // CSS principal
+    link(rel="stylesheet", href="/stylesheets/style.css")
+
+    block head
+
+  body
+    // Cabeçalho alinhado ao exemplo da segunda imagem
+    header.main-header
+      nav.main-nav.container
+        a.logo(href="/") PestControl Pro
+        ul
+          li
+            a(href="/nossosprodutos") Praga
+          li
+            a(href="/nossascategorias") Categoria
+          li
+            a(href="/nossosmetodos") Métodos
+          li
+            a(href="/favoritos") Favoritos
+          li
+            a(href="#features") Vantagens
+          li
+            a(href="#contact") Contato
+        .nav-right
+          form.search-form(action="/search", method="GET")
+            input.search-input(type="search", name="q", placeholder="Buscar produtos, categorias…", aria-label="Buscar")
+            button.search-btn(type="submit") 🔎
+          if session && session.usuario
+            span.user-greeting Olá, #{session.usuario.usuario}!
+            a.btn(href="/logout") Sair
+          else
+            a.btn(href="/login") Entrar
+
+    main
+      block content

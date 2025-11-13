@@ -1,0 +1,244 @@
+/* Login Page Styles */
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.login-card {
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo-circle {
+  width: 64px;
+  height: 64px;
+  background: #0B3D2E;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.login-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0B3D2E;
+  margin-bottom: 0.5rem;
+}
+
+.login-header p {
+  color: #666;
+}
+
+.login-form-card {
+  background: white;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  padding: 2rem;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-icon img {
+    max-width: 20px;
+    max-height: 20px;
+    position: absolute;
+    left: 12px;
+    top: 30%;
+    opacity: 50%;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 2px solid #e5e7eb;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+#senha {
+  padding: 12px 40px 12px 40px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.checkbox-label input {
+  margin-right: 0.5rem;
+  width: auto;
+  padding: 0;
+}
+
+.form-options a {
+  color: #0B3D2E;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #0B3D2E 0%, #14563F 100%);
+  color: white;
+  padding: 12px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-login {
+  margin-top: 2rem;
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.divider span {
+  background: white;
+  padding: 0 1rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.divider-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e5e7eb;
+  z-index: -1;
+}
+
+.social-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  background: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-btn span {
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.register-link .login-link {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.register-link p, .login-link p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.register-link a, .login-link a {
+  color: #0B3D2E;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Hover and Focus Effects */
+.login-form-card input:focus {
+  outline: none;
+  border-color: #0B3D2E;
+  box-shadow: 0 0 0 3px rgba(11, 61, 46, 0.1);
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #14563F 0%, #0B3D2E 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(11, 61, 46, 0.3);
+}
+
+.social-btn:hover {
+  border-color: #0B3D2E;
+  background: #f8f9fa;
+}
+
+.checkbox-label:hover {
+  color: #0B3D2E;
+}
+
+.password-toggle:hover {
+  color: #0B3D2E;
+}
+
+.form-options a:hover {
+  color: #14563F;
+}
+
+.register-link a:hover, .login-link a:hover {
+  color: #14563F;
+}

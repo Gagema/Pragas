@@ -1,0 +1,147 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Crie sua Conta | PestControl Pro
+    style.
+      /* --- Variáveis de Cor e Estilos Globais (Consistentes com o site) --- */
+      :root {
+          --primary-color: #2a7a3e; /* Verde escuro */
+          --secondary-color: #ff9800; /* Laranja para destaque */
+          --dark-color: #333333;
+          --light-color: #f4f4f4;
+          --background-color: #ffffff;
+          --border-color: #ddd;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6;
+          color: var(--dark-color);
+          background-color: var(--light-color);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 40px 20px; /* Adicionado padding vertical para telas menores */
+      }
+
+      /* --- Estrutura do Card de Registro --- */
+      .signup-container {
+          background-color: var(--background-color);
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 450px; /* Um pouco mais largo para caber os campos extras */
+          text-align: center;
+      }
+
+      .signup-header .logo {
+          font-size: 2rem;
+          font-weight: bold;
+          color: var(--primary-color);
+          text-decoration: none;
+          margin-bottom: 10px;
+          display: inline-block;
+      }
+
+      .signup-header h1 {
+          font-size: 1.5rem;
+          margin-bottom: 25px;
+          color: #555;
+      }
+
+      /* --- Formulário --- */
+      .signup-form .form-group {
+          margin-bottom: 20px;
+          text-align: left;
+      }
+
+      .signup-form label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: 500;
+      }
+
+      .signup-form input[type="text"],
+      .signup-form input[type="email"],
+      .signup-form input[type="password"] {
+          width: 100%;
+          padding: 12px 15px;
+          border: 1px solid var(--border-color);
+          border-radius: 5px;
+          font-size: 1rem;
+          transition: border-color 0.3s ease;
+      }
+
+      .signup-form input:focus {
+          outline: none;
+          border-color: var(--primary-color);
+      }
+
+      /* --- Botão de Registro --- */
+      .btn {
+          display: inline-block;
+          width: 100%;
+          padding: 12px 28px;
+          background-color: var(--primary-color);
+          color: #fff;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+          font-size: 1.1rem;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+          background-color: #1e5a2d;
+      }
+      
+      /* --- Links Inferiores --- */
+      .signup-footer {
+          margin-top: 25px;
+          font-size: 0.9rem;
+      }
+      
+      .signup-footer a {
+          color: var(--primary-color);
+          font-weight: bold;
+          text-decoration: none;
+      }
+      
+      .signup-footer a:hover {
+          text-decoration: underline;
+      }
+
+  body
+    .signup-container
+      header.signup-header
+        a(href="index.html").logo PestControl Pro
+        h1 Crie sua Conta Gratuitamente
+
+      form.signup-form(action="/register", method="POST")
+        .form-group
+          label(for="usuario") Nome Completo
+          input(type="text", id="usuario", name="usuario", placeholder="Seu usuário", required)
+        
+        
+        .form-group
+          label(for="senha") Crie uma Senha
+          input(type="password", id="senha", name="senha", placeholder="Mínimo de 8 caracteres", required)
+        
+
+        button(type="submit").btn Criar Conta
+      
+      footer.signup-footer
+        p Já tem uma conta? 
+          a(href="login.html") Faça login aqui

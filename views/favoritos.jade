@@ -1,0 +1,61 @@
+extends layout
+
+block content
+  .container
+    h2 Seus Favoritos
+    p#favMessage Carregando favoritos...
+    .favorites-list#favoritesList
+
+  script.
+    (function(){
+      const msgEl = document.getElementById('favMessage');
+      const listEl = document.getElementById('favoritesList');
+
+      function renderResults(results){
+        if(!results || results.length === 0){
+          msgEl.textContent = 'Você ainda não favoritou nenhuma praga.';
+          return;
+        }
+        msgEl.style.display = 'none';
+        const ul = document.createElement('ul');
+        ul.className = 'results-list';
+        results.forEach(p => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="/products/${p.id}">
+              <div class="result-item">
+                <img src="${p.imageUrl || '/images/placeholder.png'}" alt="${p.name}" class="result-image-small">
+                <div class="result-content">
+                  <strong>${p.name}</strong>
+                  ${p.name2 ? '<div class="small">'+p.name2+'</div>' : ''}
+                </div>
+              </div>
+            </a>
+          `;
+          ul.appendChild(li);
+        });
+        listEl.innerHTML = ''; // Limpa a lista antes de adicionar novos itens
+        listEl.appendChild(ul);
+      }
+
+      // Sempre busca os favoritos do servidor, que lida com o estado de login.
+      msgEl.textContent = 'Buscando suas pragas favoritadas...';
+      fetch('/favoritos/data?mine=true')
+        .then(r => {
+          if (r.status === 401) {
+            // Se o servidor disser que não estamos logados, mostramos a mensagem.
+            msgEl.textContent = 'Faça login para ver seus favoritos.';
+            return null;
+          }
+          return r.json();
+        })
+        .then(data => {
+          if (data) {
+            renderResults(data.results || []);
+          }
+        })
+        .catch(err => {
+          msgEl.textContent = 'Erro ao carregar favoritos.';
+          console.error(err);
+        });
+    })();
