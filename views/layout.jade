@@ -10,6 +10,13 @@ html(lang="pt-BR")
     link(href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap", rel="stylesheet")
     // CSS principal
     link(rel="stylesheet", href="/stylesheets/style.css")
+    
+    // Preload de recursos críticos
+    link(rel="preload", href="/js/lazyload.js", as="script")
+    
+    // Google Analytics
+    if hasAnalytics
+      != analyticsScript
 
     block head
 
@@ -25,6 +32,8 @@ html(lang="pt-BR")
             a(href="/nossascategorias") Categoria
           li
             a(href="/nossosmetodos") Métodos
+          li
+            a(href="/identificar") 🔍 Identificar
           li
             a(href="/favoritos") Favoritos
           li
@@ -43,3 +52,10 @@ html(lang="pt-BR")
 
     main
       block content
+    
+    // Script de lazy loading (final do body para melhor performance)
+    script(src="/js/lazyload.js", defer)
+    
+    // Script de rastreamento de eventos (apenas em produção)
+    if hasAnalytics
+      script(src="/js/analytics-events.js", defer)

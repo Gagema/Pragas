@@ -1,0 +1,246 @@
+extends ../layout
+
+block content
+  style.
+      /* --- Reset Básico e Estilos Globais --- */
+      :root {
+          --primary-color: #2a7a3e; /* Verde escuro */
+          --secondary-color: #ff9800; /* Laranja para destaque */
+          --dark-color: #333333;
+          --light-color: #f4f4f4;
+          --background-color: #ffffff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6;
+          color: var(--dark-color);
+          background-color: var(--light-color);
+      }
+      .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+      h1, h2 { font-weight: 600; margin-bottom: 20px; }
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2rem; }
+      section { padding: 60px 0; }
+      .btn {
+          display: inline-block; padding: 12px 28px; background-color: var(--secondary-color);
+          color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold;
+          transition: background-color 0.3s ease;
+      }
+      .btn:hover { background-color: #e68900; }
+
+      /* --- Cabeçalho e Navegação --- */
+      .main-header {
+          background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          position: sticky; top: 0; z-index: 1000;
+      }
+      .main-nav { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+      .main-nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+      .main-nav ul { list-style: none; display: flex; align-items: center; }
+      .main-nav ul li { margin-left: 20px; }
+      .main-nav ul a {
+          text-decoration: none; color: var(--dark-color); font-weight: 500;
+          transition: color 0.3s ease;
+      }
+      .main-nav ul a:hover { color: var(--primary-color); }
+
+      /* --- Estilos para Usuário Logado --- */
+      .user-greeting { margin-right: 15px; font-weight: 500; }
+      a.logout-btn {
+        background-color: var(--primary-color); color: #fff; padding: 8px 16px;
+        border-radius: 5px; font-weight: bold;
+      }
+      a.logout-btn:hover { background-color: #1e5a2d; color: #fff; }
+
+      /* --- Breadcrumb --- */
+      .breadcrumb {
+          background-color: var(--light-color);
+          padding: 20px 0;
+      }
+      .breadcrumb-nav {
+          font-size: 0.9rem;
+          color: #666;
+      }
+      .breadcrumb-nav a {
+          color: var(--primary-color);
+          text-decoration: none;
+      }
+      .breadcrumb-nav a:hover {
+          text-decoration: underline;
+      }
+      .breadcrumb-nav span {
+          margin: 0 8px;
+      }
+
+      /* --- Cabeçalho da Categoria --- */
+      .categoria-header {
+          background: linear-gradient(135deg, var(--primary-color) 0%, #1e5a2d 100%);
+          color: #fff;
+          padding: 40px 0;
+          text-align: center;
+      }
+      .categoria-header h1 {
+          font-size: 2.5rem;
+          margin-bottom: 15px;
+          color: #fff;
+      }
+      .categoria-header p {
+          font-size: 1.1rem;
+          max-width: 700px;
+          margin: 0 auto;
+          opacity: 0.95;
+      }
+
+      /* --- Seção de Pragas --- */
+      .pragas-section { padding: 60px 0; }
+      .pragas-count {
+          text-align: center;
+          margin-bottom: 30px;
+          font-size: 1.1rem;
+          color: #666;
+      }
+      .pragas-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 30px;
+      }
+      .praga-card {
+          background-color: var(--background-color);
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+          overflow: hidden;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .praga-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      }
+      .praga-image-container {
+          aspect-ratio: 4 / 3;
+          background-color: #f0f0f0;
+          overflow: hidden;
+      }
+      .praga-image {
+          width: 100%; height: 100%; object-fit: cover;
+          transition: transform 0.3s ease;
+      }
+      .praga-card:hover .praga-image {
+          transform: scale(1.05);
+      }
+      .praga-placeholder {
+          width: 100%; height: 100%; display: flex; flex-direction: column;
+          align-items: center; justify-content: center; color: #888;
+          background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+      }
+      .placeholder-icon { font-size: 3rem; }
+      .praga-content { padding: 20px; }
+      .praga-title { 
+          font-size: 1.2rem; 
+          margin-bottom: 5px; 
+          color: var(--dark-color);
+          font-weight: 600;
+      }
+      .praga-subtitle { 
+          font-size: 0.95rem; 
+          color: #666; 
+          font-style: italic;
+          margin-bottom: 10px;
+      }
+      .praga-description {
+          font-size: 0.9rem;
+          color: #777;
+          line-height: 1.5;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+      }
+      a.praga-link { text-decoration: none; }
+      
+      .no-pragas {
+          text-align: center;
+          padding: 60px 20px;
+          color: #666;
+      }
+      .no-pragas-icon {
+          font-size: 4rem;
+          margin-bottom: 20px;
+      }
+      .no-pragas h3 {
+          font-size: 1.5rem;
+          margin-bottom: 10px;
+          color: var(--dark-color);
+      }
+      .no-pragas p {
+          font-size: 1.1rem;
+          margin-bottom: 30px;
+      }
+
+      /* --- Rodapé --- */
+      .main-footer {
+          background-color: var(--dark-color); color: #fff;
+          text-align: center; padding: 30px 0; margin-top: 40px;
+      }
+
+      /* --- Responsividade --- */
+      @media (max-width: 768px) {
+          h1 { font-size: 2.2rem; }
+          h2 { font-size: 1.8rem; }
+          .categoria-header h1 { font-size: 2rem; }
+          .categoria-header p { font-size: 1rem; }
+          .main-nav { flex-direction: column; height: auto; padding: 15px 0; }
+          .main-nav ul { margin-top: 15px; flex-direction: column; align-items: center; gap: 10px; }
+          .main-nav ul li { margin: 10px 0; margin-left: 0; }
+          .pragas-grid { grid-template-columns: 1fr; }
+      }
+
+  body
+    main
+      //- BREADCRUMB
+      section.breadcrumb
+        .container
+          nav.breadcrumb-nav
+            a(href="/") Início
+            span /
+            a(href="/nossascategorias") Categorias
+            span /
+            span= categoria.name
+
+      //- CABEÇALHO DA CATEGORIA
+      section.categoria-header
+        .container
+          h1= categoria.name
+          if categoria.description
+            p= categoria.description
+
+      //- SEÇÃO DE PRAGAS
+      section.pragas-section
+        .container
+          if pragas && pragas.length > 0
+            .pragas-count
+              p #{pragas.length} #{pragas.length === 1 ? 'praga encontrada' : 'pragas encontradas'} nesta categoria
+            .pragas-grid
+              each praga in pragas
+                a(href=`/products/${praga.id}`).praga-link
+                  .praga-card
+                    .praga-image-container
+                      if praga.imageUrl
+                        img.praga-image(src=praga.imageUrl, alt=praga.name)
+                      else
+                        .praga-placeholder
+                          .placeholder-icon 🐛
+                          span Sem imagem
+                    .praga-content
+                      h3.praga-title= praga.name
+                      if praga.name2
+                        p.praga-subtitle= praga.name2
+                      if praga.description
+                        p.praga-description= praga.description
+          else
+            .no-pragas
+              .no-pragas-icon 🔍
+              h3 Nenhuma praga encontrada
+              p Esta categoria ainda não possui pragas cadastradas.
+              a(href="/nossascategorias").btn Voltar para Categorias
+
+  //- Rodapé removido (está em layout.jade)

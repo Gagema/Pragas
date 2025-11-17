@@ -1,0 +1,345 @@
+extends ../layout
+
+block content
+  style.
+      :root {
+          --primary-color: #2a7a3e;
+          --secondary-color: #ff9800;
+          --dark-color: #333333;
+          --light-color: #f4f4f4;
+          --background-color: #ffffff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6;
+          color: var(--dark-color);
+          background-color: var(--light-color);
+      }
+      .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+      
+      /* Header */
+      .page-header {
+          background: linear-gradient(135deg, var(--primary-color) 0%, #1e5a2d 100%);
+          color: #fff;
+          padding: 60px 20px;
+          text-align: center;
+      }
+      .page-header h1 {
+          font-size: 2.5rem;
+          margin-bottom: 15px;
+          color: #fff;
+      }
+      .page-header p {
+          font-size: 1.2rem;
+          opacity: 0.95;
+          max-width: 700px;
+          margin: 0 auto;
+      }
+      
+      /* Upload Section */
+      .upload-section {
+          background: var(--background-color);
+          padding: 40px;
+          margin: 40px auto;
+          border-radius: 12px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      }
+      
+      .upload-area {
+          border: 3px dashed #ccc;
+          border-radius: 12px;
+          padding: 60px 40px;
+          text-align: center;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          background-color: #fafafa;
+      }
+      .upload-area:hover {
+          border-color: var(--primary-color);
+          background-color: #f0f8f0;
+      }
+      .upload-area.drag-over {
+          border-color: var(--secondary-color);
+          background-color: #fff8e1;
+      }
+      
+      .upload-icon {
+          font-size: 4rem;
+          margin-bottom: 20px;
+          color: var(--primary-color);
+      }
+      .upload-area h3 {
+          font-size: 1.5rem;
+          margin-bottom: 10px;
+          color: var(--dark-color);
+      }
+      .upload-area p {
+          color: #666;
+          margin-bottom: 20px;
+      }
+      
+      #foto-input {
+          display: none;
+      }
+      
+      .btn-upload {
+          display: inline-block;
+          padding: 14px 32px;
+          background-color: var(--primary-color);
+          color: #fff;
+          border-radius: 8px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          border: none;
+          font-size: 1rem;
+      }
+      .btn-upload:hover {
+          background-color: #1e5a2d;
+      }
+      
+      /* Preview */
+      .preview-container {
+          margin-top: 30px;
+          display: none;
+      }
+      .preview-container.active {
+          display: block;
+      }
+      .preview-image {
+          max-width: 100%;
+          max-height: 400px;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          margin-bottom: 20px;
+      }
+      .preview-actions {
+          text-align: center;
+      }
+      .btn-submit {
+          padding: 14px 40px;
+          background-color: var(--secondary-color);
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          font-weight: bold;
+          cursor: pointer;
+          font-size: 1.1rem;
+          transition: background-color 0.3s ease;
+          margin-right: 15px;
+      }
+      .btn-submit:hover {
+          background-color: #e68900;
+      }
+      .btn-cancel {
+          padding: 14px 40px;
+          background-color: #666;
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          font-weight: bold;
+          cursor: pointer;
+          font-size: 1.1rem;
+          transition: background-color 0.3s ease;
+      }
+      .btn-cancel:hover {
+          background-color: #555;
+      }
+      
+      /* Como funciona */
+      .how-works {
+          margin: 60px auto;
+          padding: 40px;
+          background: var(--background-color);
+          border-radius: 12px;
+      }
+      .how-works h2 {
+          text-align: center;
+          color: var(--primary-color);
+          margin-bottom: 40px;
+          font-size: 2rem;
+      }
+      .steps-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 30px;
+      }
+      .step {
+          text-align: center;
+          padding: 20px;
+      }
+      .step-icon {
+          font-size: 3rem;
+          margin-bottom: 15px;
+      }
+      .step h3 {
+          color: var(--primary-color);
+          margin-bottom: 10px;
+      }
+      .step p {
+          color: #666;
+          font-size: 0.95rem;
+      }
+      
+      /* Loading */
+      .loading-overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.8);
+          z-index: 9999;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+      }
+      .loading-overlay.active {
+          display: flex;
+      }
+      .spinner {
+          border: 5px solid rgba(255,255,255,0.3);
+          border-top: 5px solid #fff;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+      }
+      .loading-text {
+          color: #fff;
+          margin-top: 20px;
+          font-size: 1.2rem;
+      }
+      
+      /* Responsividade */
+      @media (max-width: 768px) {
+          .page-header h1 { font-size: 2rem; }
+          .page-header p { font-size: 1rem; }
+          .upload-section { padding: 20px; }
+          .upload-area { padding: 40px 20px; }
+      }
+
+  body
+    main
+      //- Cabeçalho
+      section.page-header
+        .container
+          h1 🔍 Identificar Praga por Foto
+          p Tire uma foto da folha ou planta danificada e nosso sistema ajudará a identificar a praga
+
+      //- Upload
+      section.upload-section.container
+        form#upload-form(method="POST", action="/identificar", enctype="multipart/form-data")
+          .upload-area#upload-area
+            .upload-icon 📷
+            h3 Envie uma Foto da Planta
+            p Clique para selecionar ou arraste a imagem aqui
+            p.small Formatos aceitos: JPG, PNG, WEBP (máx. 10MB)
+            label.btn-upload(for="foto-input") Escolher Foto
+            input#foto-input(type="file", name="foto", accept="image/*", capture="environment")
+          
+          .preview-container#preview-container
+            img#preview-image.preview-image(src="", alt="Preview")
+            .preview-actions
+              button.btn-submit(type="submit") 🔬 Analisar Imagem
+              button.btn-cancel(type="button", onclick="cancelarUpload()") ❌ Cancelar
+
+      //- Como funciona
+      section.how-works.container
+        h2 Como Funciona a Identificação?
+        .steps-grid
+          .step
+            .step-icon 📸
+            h3 1. Capture
+            p Tire uma foto clara da folha ou parte danificada da planta
+          .step
+            .step-icon 🤖
+            h3 2. Análise
+            p Nosso sistema analisa padrões de danos e sintomas na imagem
+          .step
+            .step-icon 🎯
+            h3 3. Resultados
+            p Receba sugestões de pragas com nível de confiança
+          .step
+            .step-icon 💡
+            h3 4. Ação
+            p Acesse informações detalhadas e métodos de controle
+
+    //- Loading overlay
+    .loading-overlay#loading-overlay
+      .spinner
+      .loading-text Analisando imagem...
+
+    script.
+      const fotoInput = document.getElementById('foto-input');
+      const uploadArea = document.getElementById('upload-area');
+      const previewContainer = document.getElementById('preview-container');
+      const previewImage = document.getElementById('preview-image');
+      const uploadForm = document.getElementById('upload-form');
+      const loadingOverlay = document.getElementById('loading-overlay');
+      
+      // Click no upload area
+      uploadArea.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'INPUT') {
+          fotoInput.click();
+        }
+      });
+      
+      // Quando seleciona arquivo
+      fotoInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          mostrarPreview(file);
+        }
+      });
+      
+      // Drag and drop
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+      });
+      
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('drag-over');
+      });
+      
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+          fotoInput.files = e.dataTransfer.files;
+          mostrarPreview(file);
+        }
+      });
+      
+      // Mostrar preview
+      function mostrarPreview(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewImage.src = e.target.result;
+          previewContainer.classList.add('active');
+          uploadArea.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+      }
+      
+      // Cancelar upload
+      function cancelarUpload() {
+        fotoInput.value = '';
+        previewContainer.classList.remove('active');
+        uploadArea.style.display = 'block';
+        previewImage.src = '';
+      }
+      
+      // Submit form
+      uploadForm.addEventListener('submit', (e) => {
+        loadingOverlay.classList.add('active');
+      });

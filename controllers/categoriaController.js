@@ -25,6 +25,36 @@ exports.show = async (req, res, next) => {
   }
 };
 
+// Nova função: listar pragas de uma categoria
+exports.listPragas = async (req, res, next) => {
+  try {
+    const categoriaId = req.params.id;
+    
+    // Buscar informações da categoria
+    const [categoria] = await pool.query(
+      'SELECT * FROM Categoria WHERE id = ?',
+      [categoriaId]
+    );
+    
+    if (categoria.length === 0) {
+      return res.status(404).send('Categoria não encontrada');
+    }
+    
+    // Buscar todas as pragas dessa categoria
+    const [pragas] = await pool.query(
+      'SELECT * FROM Praga WHERE Categoria_id = ? ORDER BY name ASC',
+      [categoriaId]
+    );
+    
+    res.render('categoria/pragas', { 
+      categoria: categoria[0], 
+      pragas: pragas 
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.new = (req, res) => {
   res.render('categoria/new');
 };

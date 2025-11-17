@@ -79,6 +79,55 @@ html(lang="pt-BR")
       .testimonial { max-width: 700px; margin: 20px auto; }
       .testimonial blockquote { font-size: 1.2rem; font-style: italic; margin-bottom: 15px; }
       .testimonial cite { font-weight: bold; }
+      
+      /* --- Seção de Categorias --- */
+      .categorias-section { background-color: var(--background-color); text-align: center; }
+      .categorias-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 30px;
+          margin-top: 40px;
+      }
+      .categoria-card {
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+          overflow: hidden;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          text-align: left;
+      }
+      .categoria-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      }
+      .categoria-image-container {
+          aspect-ratio: 16 / 9;
+          background-color: #f0f0f0;
+          overflow: hidden;
+      }
+      .categoria-image {
+          width: 100%; height: 100%; object-fit: cover;
+          transition: transform 0.3s ease;
+      }
+      .categoria-card:hover .categoria-image {
+          transform: scale(1.05);
+      }
+      .categoria-placeholder {
+          width: 100%; height: 100%; display: flex; flex-direction: column;
+          align-items: center; justify-content: center; color: #888;
+      }
+      .placeholder-icon { font-size: 3rem; }
+      .categoria-content { padding: 20px; }
+      .categoria-title {
+          font-size: 1.3rem; margin-bottom: 10px; color: var(--primary-color);
+      }
+      .categoria-description {
+          font-size: 0.95rem; color: #666; line-height: 1.5;
+      }
+      .categoria-link { text-decoration: none; }
+      .no-categorias { color: #666; font-size: 1.1rem; margin-top: 20px; }
+      .ver-todas-container { margin-top: 40px; }
+      
       .cta-contact { background-color: var(--light-color); text-align: center; }
       .contact-form { max-width: 600px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 20px; }
       .contact-form input, .contact-form textarea { width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
@@ -110,6 +159,8 @@ html(lang="pt-BR")
             a(href="/nossascategorias") Categoria
           li
             a(href="/nossosmetodos") Métodos
+          li
+            a(href="/identificar") 🔍 Identificar
           li
             a(href="#features") Vantagens
           li
@@ -153,6 +204,32 @@ html(lang="pt-BR")
               .icon 🔔
               h3 3. Ação
               p Você recebe alertas instantâneos no seu celular ou e-mail ao detectar atividade suspeita, permitindo ação imediata e precisa.
+
+      //- NOVA SEÇÃO: NAVEGUE POR CATEGORIAS
+      section#categorias.categorias-section
+        .container
+          h2 Navegue por Categorias
+          p Encontre informações sobre pragas organizadas por tipo e ambiente
+          .categorias-grid
+            if categorias && categorias.length > 0
+              each cat in categorias
+                a(href='/categoria/' + cat.id + '/pragas').categoria-link
+                  .categoria-card
+                    .categoria-image-container
+                      if cat.imageUrl
+                        img.categoria-image(src=cat.imageUrl, alt=cat.name)
+                      else
+                        .categoria-placeholder
+                          .placeholder-icon 🦗
+                          span Sem imagem
+                    .categoria-content
+                      h3.categoria-title= cat.name
+                      if cat.description
+                        p.categoria-description= cat.description.substring(0, 100) + (cat.description.length > 100 ? '...' : '')
+            else
+              p.no-categorias Nenhuma categoria disponível no momento.
+          .ver-todas-container
+            a(href="/nossascategorias").btn Ver Todas as Categorias
 
       //- SEÇÃO VANTAGENS
       section#features.features

@@ -6,6 +6,9 @@ var logger           = require('morgan');
 var session          = require('express-session');
 var methodOverride   = require('method-override');
 
+// Monitoramento e Analytics
+const { initializeSentry, requestHandler, tracingHandler, errorHandler, captureError } = require('./middleware/errorTracking');
+const { analyticsMiddleware } = require('./middleware/analytics');
 
 // Conexão com pool MySQL via db.js
 const pool           = require('./db');
@@ -26,8 +29,14 @@ const { estaLogado, eAdmin } = require('./middleware/authmiddleware');
 var productsRouter   = require('./routes/products');  // CRUD de produtos
 var searchRouter     = require('./routes/search');
 var favoritosRouter  = require('./routes/favoritos');
+var identificarRouter = require('./routes/identificar');
 
 var app = express();
+
+// Inicializa Sentry (deve ser o primeiro middleware)
+initializeSentry(app);
+app.use(requestHandler());
+app.use(tracingHandler());
 
 //Css set
 app.use('/css', express.static('stylesheets/form.css'));
@@ -74,11 +83,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Middleware de Analytics
+app.use(analyticsMiddleware);
+
 // Rotas de autenticação
 app.use(authRoutes);
 
 // Busca
 app.use('/search', searchRouter);
+
+// Identificar praga por foto
+app.use('/identificar', identificarRouter);
 
 // Favoritos (localStorage-driven client + data endpoint)
 app.use('/favoritos', favoritosRouter);
@@ -118,8 +133,18 @@ app.get('/select', estaLogado, async (req, res) => {
 // catch 404 e forward para error handler
 app.use((req, res, next) => next(createError(404)));
 
+// Handler de erro do Sentry (deve vir antes do error handler padrão)
+app.use(errorHandler());
+
 // error handler
 app.use((err, req, res, next) => {
+  // Captura erro no Sentry
+  captureError(err, {
+    url: req.url,
+    method: req.method,
+    userId: req.session?.usuario?.id
+  });
+  
   res.locals.message = err.message;
   res.locals.error   = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);

@@ -1,0 +1,7 @@
+# Ignorar backups
+/backups/
+*.sql
+*.sql.gz
+
+# Ignorar logs
+/logs/

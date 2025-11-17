@@ -18,6 +18,8 @@ router.get('/new',      ctrl.new);
 router.post('/',        upload.single('image'), ctrl.create);
 
 router.get('/:id',      ctrl.show);
+// Nova rota: listar pragas de uma categoria
+router.get('/:id/pragas', ctrl.listPragas);
 router.get('/:id/edit', upload.single('image'), ctrl.edit);
 // Aplica upload.single em edit se quiser exibir preview, mas principalmente em update
 router.put('/:id',      upload.single('image'), ctrl.update);
