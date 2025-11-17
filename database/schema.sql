@@ -73,10 +73,15 @@ ALTER TABLE Metodo
 ADD COLUMN principios_ativos varchar(1000),
 ADD COLUMN manejo_integrado TEXT,
 ADD COLUMN dosagem_recomendada VARCHAR(255),
-ADD COLUMN carencia_dias INT;
+ADD COLUMN carencia_dias INT,
+ADD COLUMN passo_a_passo TEXT,
+ADD COLUMN tempo_solucao VARCHAR(255);
 
 ALTER  TABLE Praga
 ADD COLUMN gallery_images TEXT;
+
+ALTER TABLE Praga
+ADD COLUMN video_url VARCHAR(500);
 
 CREATE TABLE favoritos(
     id INT AUTO_INCREMENT PRIMARY KEY,

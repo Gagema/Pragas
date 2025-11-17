@@ -49,13 +49,15 @@ exports.create = async (req, res, next) => {
     const manejo_integrado = req.body.manejo_integrado || null;
     const dosagem_recomendada = req.body.dosagem_recomendada || null;
     const carencia_dias = req.body.carencia_dias || null;
+    const passo_a_passo = req.body.passo_a_passo || null;
+    const tempo_solucao = req.body.tempo_solucao || null;
 
     // 2) Agora envie valores SEM undefined
     await pool.execute(
       `INSERT INTO Metodo
-        (name,description , imageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [name, description, imageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias]
+        (name,description , imageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias, passo_a_passo, tempo_solucao)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [name, description, imageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias, passo_a_passo, tempo_solucao]
     );
     
     
@@ -85,7 +87,7 @@ exports.edit = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
 
-    const { name, description, currentImageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias } = req.body;
+    const { name, description, currentImageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias, passo_a_passo, tempo_solucao } = req.body;
 
     // se veio arquivo, use a nova imagem; senão, mantenha a antiga
     const imageUrl = req.file
@@ -101,9 +103,11 @@ exports.update = async (req, res, next) => {
              manejo_integrado = ?,
              dosagem_recomendada = ?,
              carencia_dias = ?,
+             passo_a_passo = ?,
+             tempo_solucao = ?,
              updatedAt   = CURRENT_TIMESTAMP
        WHERE id = ?`,
-      [ name, description,  imageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias, req.params.id ]
+      [ name, description,  imageUrl, principios_ativos, manejo_integrado, dosagem_recomendada, carencia_dias, passo_a_passo, tempo_solucao, req.params.id ]
 
     );
 

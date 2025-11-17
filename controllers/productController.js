@@ -51,11 +51,31 @@ exports.show = async (req, res, next) => {
       }
     }
 
+    // Convert video URL to embed format
+    let embedVideoUrl = null;
+    if (product.video_url) {
+      const url = product.video_url;
+      // YouTube
+      const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
+      if (youtubeMatch) {
+        embedVideoUrl = 'https://www.youtube.com/embed/' + youtubeMatch[1];
+      } else {
+        // Vimeo
+        const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+        if (vimeoMatch) {
+          embedVideoUrl = 'https://player.vimeo.com/video/' + vimeoMatch[1];
+        } else {
+          embedVideoUrl = url; // Use as-is if not recognized
+        }
+      }
+    }
+
     res.render('products/show',{
       product: product,
       metodo: metodo[0],
       categoria: categoria[0] || {},
-      gallery: gallery
+      gallery: gallery,
+      embedVideoUrl: embedVideoUrl
     });
   } catch (err) {
     next(err);
@@ -80,7 +100,7 @@ exports.new = async (req, res) => {
 exports.create = async (req, res, next) => {
   try {
 
-    const { name, name2, description, life_cycle, damage, Categoria, Metodo } = req.body;
+    const { name, name2, description, life_cycle, damage, Categoria, Metodo, video_url } = req.body;
 
     // robust file handling: multer can populate req.file or req.files depending on config
     let imageUrl = null;
@@ -107,14 +127,15 @@ exports.create = async (req, res, next) => {
       (typeof damage === 'undefined' || damage === '') ? null : damage,
       imageUrl || null,
       galleryJson || null,
+      (typeof video_url === 'undefined' || video_url === '') ? null : video_url,
       (typeof Categoria === 'undefined' || Categoria === '') ? null : Categoria,
       (typeof Metodo === 'undefined' || Metodo === '') ? null : Metodo
     ];
 
     await pool.execute(
       `INSERT INTO Praga
-        (name, name2, description, life_cycle, damage, imageUrl, gallery_images, Categoria_id, Metodo_id)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (name, name2, description, life_cycle, damage, imageUrl, gallery_images, video_url, Categoria_id, Metodo_id)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       params
     );
 
@@ -153,7 +174,7 @@ exports.update = async (req, res, next) => {
     const {id} = req.params;
     const {
       name, name2, description, life_cycle, damage,
-      currentImageUrl,Categoria, Metodo, delete_gallery_images
+      currentImageUrl,Categoria, Metodo, delete_gallery_images, video_url
     } = req.body;
 
     const[rows] = await pool.query('SELECT * FROM Praga WHERE id = ?', [id])
@@ -184,10 +205,10 @@ exports.update = async (req, res, next) => {
     await pool.execute(
       `UPDATE Praga 
       SET name = ?, name2 = ?, description = ?, life_cycle = ?, damage = ?,
-          imageUrl = ?, Categoria_id = ? , Metodo_id = ?, gallery_images= ?,
+          imageUrl = ?, Categoria_id = ? , Metodo_id = ?, gallery_images= ?, video_url = ?,
           updatedAt = CURRENT_TIMESTAMP
        WHERE id = ?`,
-      [name || null, name2 || null, description || null, life_cycle || null, damage || null, imageUrl || null, Categoria || null, Metodo || null, galleryJson || null, id]
+      [name || null, name2 || null, description || null, life_cycle || null, damage || null, imageUrl || null, Categoria || null, Metodo || null, galleryJson || null, video_url || null, id]
     );
     
     res.redirect('/products/'+id);

@@ -111,6 +111,14 @@ html(lang="pt-BR")
         content: '✓'; 
       }
       
+      .help-text {
+          display: block;
+          margin-top: 5px;
+          font-size: 0.85rem;
+          color: #666;
+          font-style: italic;
+      }
+      
 
       @media (max-width: 768px) {
         .admin-nav{
@@ -210,6 +218,11 @@ html(lang="pt-BR")
               .form-group
                 label.form-label(for="image") Alterar Imagem Principal (opcional)
                 input.file-input(type="file", name="image", id="image", accept="image/*")
+
+              .form-group
+                label(for="video_url") Link do Vídeo (YouTube ou Vimeo)
+                input(type="text", id="video_url", name="video_url", value=product.video_url, placeholder="Ex: https://www.youtube.com/watch?v=...")
+                small.help-text Cole o link completo do vídeo do YouTube ou Vimeo
 
               .form-group.gallery-edit-container
               label Imagens da Galeria Atuais (Clique no X para remover)

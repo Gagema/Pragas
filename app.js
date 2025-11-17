@@ -19,14 +19,8 @@ var categoriaRouter   = require('./routes/categorias');
 var metodoRouter   = require('./routes/metodos');
 var categoriasRouter   = require('./routes/nossascategorias');
 var metodosRouter   = require('./routes/nossosmetodos');
-var acessoriosRouter = require('./routes/categorias/acessorios');
-var roupasRouter     = require('./routes/categorias/roupas');
-var eletronicosRouter= require('./routes/categorias/eletronicos');
 var carrinhoRouter   = require('./routes/carrinho');
-var pedidosRouter    = require('./routes/pedidos');
-var anunciarRouter   = require('./routes/anunciar');
 var dashboardadminRouter = require('./routes/dashboardadmin');
-var meuperfilRouter  = require('./routes/perfil');
 const authRoutes     = require('./routes/authroute');
 const { estaLogado, eAdmin } = require('./middleware/authmiddleware');
 var productsRouter   = require('./routes/products');  // CRUD de produtos
@@ -94,9 +88,6 @@ app.use('/', indexRouter);
 app.use('/nossosprodutos', produtosRouter);
 app.use('/nossascategorias', categoriasRouter);
 app.use('/nossosmetodos', metodosRouter);
-app.use('/categorias/acessorios', acessoriosRouter);
-app.use('/categorias/roupas', roupasRouter);
-app.use('/categorias/eletronicos', eletronicosRouter);
 
 // CRUD de produtos
 // Rotas protegidas p/ admin
@@ -107,9 +98,6 @@ app.use('/categoria', categoriaRouter)
 // Rotas protegidas p/ user logado
 app.use('/users', usersRouter);
 app.use('/carrinho', carrinhoRouter);
-app.use('/pedidos', pedidosRouter);
-app.use('/anunciar', anunciarRouter);
-app.use('/perfil', meuperfilRouter);
 
 // Rota admin
 app.get('/admin', estaLogado, eAdmin, (req, res) => {

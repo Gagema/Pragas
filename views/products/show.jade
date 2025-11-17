@@ -82,6 +82,197 @@ html(lang="pt-BR")
         border-color: var(--primary-color);
         box-shadow: 0 0 10px rgba(42, 122, 62, 0.5);
       }
+      
+      /* Video Player Styles */
+      .video-container {
+        width: 100%;
+        margin-top: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+      .video-container iframe {
+        width: 100%;
+        height: 315px;
+        border: none;
+      }
+      
+      /* Lightbox Styles */
+      .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        justify-content: center;
+        align-items: center;
+      }
+      .lightbox.active {
+        display: flex;
+      }
+      .lightbox-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+      }
+      .lightbox-image {
+        max-width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 8px;
+      }
+      .lightbox-caption {
+        position: absolute;
+        bottom: -40px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #fff;
+        font-size: 1.1rem;
+        padding: 10px;
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        font-size: 40px;
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+      .lightbox-close:hover {
+        color: var(--secondary-color);
+      }
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 50px;
+        color: #fff;
+        cursor: pointer;
+        user-select: none;
+        padding: 20px;
+        transition: color 0.3s;
+      }
+      .lightbox-nav:hover {
+        color: var(--secondary-color);
+      }
+      .lightbox-prev {
+        left: 20px;
+      }
+      .lightbox-next {
+        right: 20px;
+      }
+
+      /* Seção de Métodos de Controle */
+      .control-methods-section {
+        margin-top: 40px;
+        padding: 30px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        border: 2px solid var(--primary-color);
+      }
+      .control-methods-section h2 {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .control-methods-section h2::before {
+        content: "🛡️";
+        font-size: 2rem;
+      }
+      .control-methods-section .subtitle {
+        color: #666;
+        font-size: 1rem;
+        margin-bottom: 25px;
+      }
+      .method-card {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+      }
+      .method-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+      .method-title {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        font-weight: bold;
+        flex: 1;
+      }
+      .time-badge {
+        background-color: var(--secondary-color);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+      .method-description {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 20px;
+      }
+      .steps-container {
+        background-color: #f0f7f4;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary-color);
+      }
+      .steps-title {
+        font-size: 1.2rem;
+        color: var(--dark-color);
+        font-weight: bold;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .steps-title::before {
+        content: "📋";
+      }
+      .step-item {
+        padding: 12px 0;
+        border-bottom: 1px solid #ddd;
+        line-height: 1.6;
+        color: #333;
+      }
+      .step-item:last-child {
+        border-bottom: none;
+      }
+      .step-number {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: #fff;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+      .no-method-message {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+        font-style: italic;
+      }
 
       .pest-info .pest-title { font-size: 2.5rem; margin-bottom: 5px; color: var(--dark-color); }
       .pest-info .pest-scientific-name { font-size: 1.2rem; font-style: italic; color: #666; margin-bottom: 30px; display: block; }
@@ -158,12 +349,17 @@ html(lang="pt-BR")
       .container
         .pest-detail-layout
           .gallery-container 
-            img(src=(gallery.length>0 ? gallery[0] : "http://placehold.co/400x300/f0f0f0/aaa?text=N/A"), alt=product.name, id="galleryMainImage").gallery-main-image
+            img(src=(gallery.length>0 ? gallery[0] : "http://placehold.co/400x300/f0f0f0/aaa?text=N/A"), alt=product.name, id="galleryMainImage", style="cursor: pointer;").gallery-main-image
 
             if gallery.length > 1
               .gallery-thumbnails 
                 each imageUrl, index in gallery 
-                  img(src=imageUrl, alt='Visualização' + (index +1)).gallery-thumbnail(class=(index === 0 ? 'active' : ''))
+                  img(src=imageUrl, alt='Visualização ' + (index +1), data-index=index).gallery-thumbnail(class=(index === 0 ? 'active' : ''))
+            
+            // Video Player Section
+            if embedVideoUrl
+              .video-container
+                iframe(src=embedVideoUrl, allowfullscreen, allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture")
 
           // Coluna de Informações
           .pest-info
@@ -199,38 +395,163 @@ html(lang="pt-BR")
                 form(method="POST", action="/products/" + product.id + "?_method=DELETE", style="display:inline; margin:0;")
                   button(type="submit", onclick="return confirm('Tem certeza que deseja excluir esta praga?')").btn.btn-delete Excluir Praga
 
-            // Favoritar (apenas para usuários logados)
-            if session && session.usuario
-              .detail-section
-                button#favoriteBtn.btn(type="button" data-id=product.id data-loggedin="true") Favoritar
-            else
-              .detail-section
-                p.login-required
-                  a(href="/login") Faça login
-                  span  para favoritar pragas
+        // Seção de Métodos de Controle/Soluções
+        .control-methods-section
+          h2 💡 Como Resolver Este Problema
+          p.subtitle Soluções práticas e passo a passo para você controlar essa praga de forma eficaz
+          
+          if metodo && metodo.passo_a_passo
+            .method-card
+              .method-header
+                h3.method-title= metodo.name
+                if metodo.tempo_solucao
+                  .time-badge ⏱️ #{metodo.tempo_solucao}
+              
+              if metodo.description
+                p.method-description= metodo.description
+              
+              if metodo.passo_a_passo
+                .steps-container
+                  .steps-title Passo a Passo
+                  - var steps = metodo.passo_a_passo.split('\n').filter(s => s.trim())
+                  each step, index in steps
+                    .step-item
+                      span.step-number= index + 1
+                      span= step.replace(/^\d+\.\s*/, '')
+          else
+            .no-method-message
+              p 📌 Ainda não há métodos de controle cadastrados para esta praga.
+              if session && session.usuario && session.usuario.funcao === 'admin'
+                p
+                  a(href="/metodo/new") Cadastre um método agora
+        
+        // Seção de Favoritar
+        .container
+          if session && session.usuario
+            .detail-section
+              button#favoriteBtn.btn(type="button" data-id=product.id data-loggedin="true") Favoritar
+          else
+            .detail-section
+              p.login-required
+                a(href="/login") Faça login
+                span  para favoritar pragas
+    
+    // Lightbox for fullscreen image viewing
+    #lightbox.lightbox
+      span.lightbox-close ×
+      span.lightbox-nav.lightbox-prev ‹
+      span.lightbox-nav.lightbox-next ›
+      .lightbox-content
+        img#lightboxImage.lightbox-image(src="", alt="")
+        .lightbox-caption#lightboxCaption
 
     footer.main-footer
       .container
         p &copy; 2025 PestControl Pro. Todos os direitos reservados.
 
      script.
+      // Gallery data for lightbox
+      const galleryImages = !{JSON.stringify(gallery || [])};
+      let currentImageIndex = 0;
+
       // Espera o documento carregar
       document.addEventListener('DOMContentLoaded', function() {
         const mainImage = document.getElementById('galleryMainImage');
         const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const lightboxClose = document.querySelector('.lightbox-close');
+        const lightboxPrev = document.querySelector('.lightbox-prev');
+        const lightboxNext = document.querySelector('.lightbox-next');
 
+        // Gallery thumbnail functionality
         if (mainImage && thumbnails.length > 0) {
           thumbnails.forEach(function(thumb) {
             thumb.addEventListener('click', function() {
-
               thumbnails.forEach(t => t.classList.remove('active'));
-              
               this.classList.add('active');
-              
               mainImage.src = this.src;
+              currentImageIndex = parseInt(this.dataset.index);
             });
           });
         }
+
+        // Lightbox functionality
+        function openLightbox(index) {
+          if (galleryImages.length === 0) return;
+          currentImageIndex = index;
+          lightboxImage.src = galleryImages[currentImageIndex];
+          lightboxCaption.textContent = 'Imagem ' + (currentImageIndex + 1) + ' de ' + galleryImages.length;
+          lightbox.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+          lightbox.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+
+        function showPrevImage() {
+          currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+          lightboxImage.src = galleryImages[currentImageIndex];
+          lightboxCaption.textContent = 'Imagem ' + (currentImageIndex + 1) + ' de ' + galleryImages.length;
+        }
+
+        function showNextImage() {
+          currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+          lightboxImage.src = galleryImages[currentImageIndex];
+          lightboxCaption.textContent = 'Imagem ' + (currentImageIndex + 1) + ' de ' + galleryImages.length;
+        }
+
+        // Main image click to open lightbox
+        if (mainImage) {
+          mainImage.addEventListener('click', function() {
+            openLightbox(currentImageIndex);
+          });
+        }
+
+        // Thumbnail click to open lightbox
+        thumbnails.forEach(function(thumb) {
+          thumb.addEventListener('dblclick', function() {
+            openLightbox(parseInt(this.dataset.index));
+          });
+        });
+
+        // Lightbox controls
+        if (lightboxClose) {
+          lightboxClose.addEventListener('click', closeLightbox);
+        }
+
+        if (lightboxPrev) {
+          lightboxPrev.addEventListener('click', showPrevImage);
+        }
+
+        if (lightboxNext) {
+          lightboxNext.addEventListener('click', showNextImage);
+        }
+
+        // Close lightbox on background click
+        if (lightbox) {
+          lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+              closeLightbox();
+            }
+          });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+          if (!lightbox.classList.contains('active')) return;
+          
+          if (e.key === 'Escape') {
+            closeLightbox();
+          } else if (e.key === 'ArrowLeft') {
+            showPrevImage();
+          } else if (e.key === 'ArrowRight') {
+            showNextImage();
+          }
+        });
       });
 
       // Favorite button logic: server-backed for logged-in users

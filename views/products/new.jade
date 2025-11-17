@@ -149,6 +149,14 @@ html(lang="pt-BR")
           background-color: #f9f9f9;
       }
       
+      .help-text {
+          display: block;
+          margin-top: 5px;
+          font-size: 0.85rem;
+          color: #666;
+          font-style: italic;
+      }
+      
       .form-actions {
           text-align: right;
           margin-top: 30px;
@@ -239,6 +247,10 @@ html(lang="pt-BR")
             label(for="image") Imagem Principal
             input.file-input(type="file", name="image", id="image", accept="image/*")
           
+          .form-group
+            label(for="video_url") Link do Vídeo (YouTube ou Vimeo)
+            input(type="text", id="video_url", name="video_url", placeholder="Ex: https://www.youtube.com/watch?v=...")
+            small.help-text Cole o link completo do vídeo do YouTube ou Vimeo
           
           .form-group
             label(for="gallery_images") Imagens da Galeria (Imagens detalhadas da praga)

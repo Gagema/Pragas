@@ -70,6 +70,13 @@ html(lang="pt-BR")
           padding: 10px; background-color: #f9f9f9; border: 1px solid var(--border-color);
           border-radius: 5px; width: auto; display: block;
       }
+      .help-text {
+          display: block;
+          margin-top: 5px;
+          font-size: 0.85rem;
+          color: #666;
+          font-style: italic;
+      }
       .form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
       .main-footer { background-color: var(--dark-color); color: #fff; text-align: center; padding: 30px 0; }
 
@@ -166,6 +173,18 @@ html(lang="pt-BR")
             .form-group
               label(for='carencia_dias') Período de Carência (dias)
               input#carencia_dias.form-control(type='number', name='carencia_dias', value=metodo.carencia_dias, placeholder="Ex: 15")
+
+            h3 Instruções para Usuário Leigo
+            
+            .form-group
+              label(for='passo_a_passo') Passo a Passo (Receita Caseira ou Instruções)
+              textarea#passo_a_passo.form-control(name='passo_a_passo', rows='8', placeholder="Descreva cada passo detalhadamente:\n1. Misture 1 colher de sabão neutro em 1 litro de água\n2. Adicione 2 colheres de óleo de neem\n3. Aplique com borrifador nas folhas infectadas\n4. Repita a cada 7 dias") #{metodo.passo_a_passo}
+              small.help-text Escreva de forma clara e simples, numerando cada passo
+            
+            .form-group
+              label(for='tempo_solucao') Tempo Esperado para Solução
+              input#tempo_solucao.form-control(type='text', name='tempo_solucao', value=metodo.tempo_solucao, placeholder="Ex: 2 a 3 semanas com aplicação semanal")
+              small.help-text Informe quanto tempo levará para resolver o problema
             
             .form-actions
               //- Corrigido o link de cancelar
